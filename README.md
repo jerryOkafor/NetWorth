@@ -282,3 +282,7 @@ We encourage you to explore Compose Multiplatform further and try out more proje
 * [Create an application targeting Windows, macOS, and Linux with Compose Multiplatform for Desktop](https://github.com/JetBrains/compose-multiplatform-desktop-template#readme)
 * [Complete more Compose Multiplatform tutorials](https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md)
 * [Explore some more advanced Compose Multiplatform example projects](https://github.com/JetBrains/compose-multiplatform/blob/master/examples/README.md)
+
+# References
+
+[Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome)

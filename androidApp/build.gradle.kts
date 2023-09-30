@@ -9,7 +9,9 @@ kotlin {
     sourceSets {
         val androidMain by getting {
             dependencies {
+                implementation("androidx.activity:activity-ktx:1.8.0-rc01")
                 implementation(project(":shared"))
+                implementation(project(":sharedUI"))
             }
         }
     }
@@ -17,7 +19,7 @@ kotlin {
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication"
+    namespace = "com.jerryokafor.networth"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
@@ -35,4 +37,7 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+dependencies {
+    implementation("androidx.compose.foundation:foundation-android:1.5.2")
 }
