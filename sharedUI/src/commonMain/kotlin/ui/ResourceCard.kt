@@ -81,12 +81,6 @@ fun ResourceCard() {
                 Text(text = "Request Withdrawal", style = MaterialTheme.typography.titleMedium)
             }
             TwoVerticalSpacer()
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(color = Color(0xFFD9DBE9))
-            )
         }
     }
 }

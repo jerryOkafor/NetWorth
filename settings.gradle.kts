@@ -1,4 +1,4 @@
-rootProject.name = "MyApplication"
+rootProject.name = "NetWorthKMP"
 
 include(":androidApp")
 include(":shared")
@@ -23,7 +23,6 @@ pluginManagement {
 
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
-
         id("org.jetbrains.compose").version(composeVersion)
     }
 }
