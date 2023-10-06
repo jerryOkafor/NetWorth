@@ -1,0 +1,25 @@
+name: Build Networth (Build,Test,Check)
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Build android app
+        run: ./gradlew assembleDebug
+
+      - name: Run Unit Tests (Android)
+        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
+
+      - name: Run Unit Tests (iOS)
+        run: ./gradlew cleanIosX64Test iosX64Test
