@@ -1,4 +1,4 @@
-name: Build Networth (Build,Test,Check)
+name: Build NetWorth (Build Test & Check)
 
 on: pull_request
 
