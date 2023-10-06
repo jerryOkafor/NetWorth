@@ -154,9 +154,7 @@ configuration:
 
    <img src="readme_images/target_device.png">
 
-4. The `iosApp` run configuration is now available. Click **Run** next to your virtual device:
-
-<img src="readme_images/hello_world_ios.png" height="200px">
+4. The `iosApp` run configuration is now available. Click **Run** next to your virtual device
 
 #### Running on a real device
 
