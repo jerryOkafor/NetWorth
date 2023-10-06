@@ -2,7 +2,6 @@ name: Build NetWorth (Build Test & Check)
 
 on: push
 
-
 jobs:
   build:
     runs-on: macos-latest
