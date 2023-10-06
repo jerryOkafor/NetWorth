@@ -12,11 +12,12 @@
 > on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
 ## Screenshots
-
+### Android
 <p align="center">
   <img src="doc/images/networth_android.png"  alt="NetWorth Android screenshot sample"/>
 </p>
 
+### iOS
 <p align="center">
   <img src="doc/images/networth_iOS.png"  alt="NetWorth Android iOS sample"/>
 </p>
