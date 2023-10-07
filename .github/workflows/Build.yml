@@ -67,7 +67,7 @@ jobs:
       - name: Setup Team Account
         run: |
           touch "iosApp/Configuration/Config.xcconfig"
-          echo "TEAM_ID=$TEAM_ID" >>iosApp/Configuration/Config.xcconfig
+          echo "TEAM_ID=${{TEAM_ID}}" >>iosApp/Configuration/Config.xcconfig
           echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
           echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xcconfig
 
@@ -76,7 +76,7 @@ jobs:
         run: ./gradlew cleanIosX64Test iosX64Test
 
       - name: Build iOS app
-        run: xcodebuild -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 8' build
+        run: xcodebuild -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 12' build
 
       - name: Run iOS unit tests
-        run: xcodebuild test -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 8' build -test-timeouts-enabled YES
+        run: xcodebuild test -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 12' build -test-timeouts-enabled YES
