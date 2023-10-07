@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package ui.theme
 
 import androidx.compose.foundation.layout.ColumnScope
