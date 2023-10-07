@@ -2,9 +2,29 @@ name: Build NetWorth (Build Test & Check)
 
 on: push
 
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  code-quality:
     runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Code Quality
+        run: ./gradlew detekt ktlintCheck
+
+  build-android:
+    name: Build, Test & Check (Android)
+    runs-on: macos-latest
+    needs: [code-quality]
 
     steps:
       - name: Checkout
@@ -20,6 +40,20 @@ jobs:
 
       - name: Run Unit Tests (Android)
         run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
+
+  build-ios:
+    name: Build, Test & Check (iOS)
+    runs-on: macos-latest
+    needs: [code-quality]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
 
       - name: Run Unit Tests (iOS)
         run: ./gradlew cleanIosX64Test iosX64Test

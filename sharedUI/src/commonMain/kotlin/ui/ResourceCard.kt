@@ -1,9 +1,8 @@
 @file:OptIn(ExperimentalResourceApi::class)
+@file:Suppress("MagicNumber")
 
 package ui
 
-import OneAndHalfHorizontalSpacer
-import TwoVerticalSpacer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.OneAndHalfHorizontalSpacer
+import ui.theme.TwoVerticalSpacer
 
 @Composable
 fun ResourceCard() {
@@ -38,7 +39,7 @@ fun ResourceCard() {
                     modifier = Modifier.size(32.dp),
                     painter = painterResource("ic_calendar_clock.xml"),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface))
+                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface)),
                 )
                 OneAndHalfHorizontalSpacer()
                 Text(text = "Get Fund Report", style = MaterialTheme.typography.titleMedium)
@@ -48,7 +49,7 @@ fun ResourceCard() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(color = Color(0xFFD9DBE9))
+                    .background(color = Color(0xFFD9DBE9)),
             )
             TwoVerticalSpacer()
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -56,7 +57,7 @@ fun ResourceCard() {
                     modifier = Modifier.size(32.dp),
                     painter = painterResource("ic_history.xml"),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface))
+                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface)),
                 )
                 OneAndHalfHorizontalSpacer()
                 Text(text = "Transaction History", style = MaterialTheme.typography.titleMedium)
@@ -66,7 +67,7 @@ fun ResourceCard() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(color = Color(0xFFD9DBE9))
+                    .background(color = Color(0xFFD9DBE9)),
             )
 
             TwoVerticalSpacer()
@@ -75,7 +76,7 @@ fun ResourceCard() {
                     modifier = Modifier.size(32.dp),
                     painter = painterResource("ic_money.xml"),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface))
+                    colorFilter = ColorFilter.tint(contentColorFor(MaterialTheme.colorScheme.surface)),
                 )
                 OneAndHalfHorizontalSpacer()
                 Text(text = "Request Withdrawal", style = MaterialTheme.typography.titleMedium)

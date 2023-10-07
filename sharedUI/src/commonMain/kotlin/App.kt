@@ -1,7 +1,10 @@
 @file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
-    ExperimentalResourceApi::class
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalResourceApi::class,
 )
+
+@file:Suppress("TooManyFunctions", "MultiLineIfElse", "MagicNumber")
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -11,11 +14,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -66,14 +65,21 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.Footer
 import ui.ResourceCard
+import ui.theme.HalfHorizontalSpacer
+import ui.theme.HalfVerticalSpacer
+import ui.theme.OneAndHalfHorizontalSpacer
+import ui.theme.OneVerticalSpacer
+import ui.theme.QuarterHorizontalSpacer
+import ui.theme.TwoHorizontalSpacer
+import ui.theme.TwoVerticalSpacer
 
 private val LightColorScheme = lightColorScheme(
     surface = Color(0xFFFFFFFF),
-    background = Color(0xFFF8F9FE)
+    background = Color(0xFFF8F9FE),
 )
 private val DarkColorScheme = darkColorScheme(
     surface = Color(0xFF14142B),
-    background = Color(0xFF25253C)
+    background = Color(0xFF25253C),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,13 +100,14 @@ fun App(onAppThemeChange: (isDarkTheme: Boolean) -> Unit = {}) {
             Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CenterAlignedTopAppBar(
                 title = { Text(text = "NetWorth") },
                 colors = TopAppBarDefaults.topAppBarColors(),
                 actions = {
-                    Switch(modifier = Modifier.padding(16.dp),
+                    Switch(
+                        modifier = Modifier.padding(16.dp),
                         checked = shouldUseDarkTheme,
                         onCheckedChange = {
                             shouldUseDarkTheme = it
@@ -108,12 +115,14 @@ fun App(onAppThemeChange: (isDarkTheme: Boolean) -> Unit = {}) {
                         },
                         thumbContent = {
                             Icon(
-                                painter = painterResource(if (shouldUseDarkTheme) "ic_dark_mode.xml" else "ic_light_mode.xml"),
-                                contentDescription = "Toggle theme"
+                                painter = painterResource(
+                                    if (shouldUseDarkTheme) "ic_dark_mode.xml" else "ic_light_mode.xml",
+                                ),
+                                contentDescription = "Toggle theme",
                             )
-                        }
+                        },
                     )
-                }
+                },
             )
             Column(modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
                 TwoVerticalSpacer()
@@ -125,55 +134,54 @@ fun App(onAppThemeChange: (isDarkTheme: Boolean) -> Unit = {}) {
                     Text(
                         text = "Investments",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = contentColorFor(MaterialTheme.colorScheme.background)
+                        color = contentColorFor(MaterialTheme.colorScheme.background),
                     )
                     TwoVerticalSpacer()
                     Row(
                         modifier = Modifier.height(IntrinsicSize.Min),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalAlignment = Alignment.Top
+                        verticalAlignment = Alignment.Top,
                     ) {
                         Column(
                             modifier = Modifier.weight(1F),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = "Active(2)",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = Color(0xFF3B3DCC)
+                                color = Color(0xFF3B3DCC),
                             )
                             Divider(
                                 modifier = Modifier.size(8.dp)
                                     .clip(CircleShape),
-                                color = Color(0xFF3B3DCC)
+                                color = Color(0xFF3B3DCC),
                             )
                         }
                         Column(
                             modifier = Modifier.weight(1F),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = "InActive(2)",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = Color(0xFFD9DBE9)
+                                color = Color(0xFFD9DBE9),
                             )
                         }
                     }
-
                 }
                 TwoVerticalSpacer()
                 InvestmentCard(
                     name = "GrowFix Gold Dec 30",
                     icon = "ic_gfg.xml",
-                    color = Color(0xFFF5C324)
+                    color = Color(0xFFF5C324),
                 )
                 TwoVerticalSpacer()
                 InvestmentCard(
                     name = "GrowFix Wheels",
                     icon = "ic_gfw.xml",
-                    color = Color(0xFFFF8A65)
+                    color = Color(0xFFFF8A65),
                 )
                 TwoVerticalSpacer()
                 ResourceCard()
@@ -184,73 +192,6 @@ fun App(onAppThemeChange: (isDarkTheme: Boolean) -> Unit = {}) {
     }
 }
 
-expect fun getPlatformName(): String
-
-
-//Horizontal
-@Composable
-fun RowScope.FillingSpacer() {
-    Spacer(modifier = Modifier.weight(1F))
-}
-
-@Composable
-fun QuarterHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(2.dp))
-}
-
-@Composable
-fun HalfHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(4.dp))
-}
-
-@Composable
-fun OneHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(8.dp))
-}
-
-@Composable
-fun OneAndHalfHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(12.dp))
-}
-
-@Composable
-fun TwoHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(16.dp))
-}
-
-
-//Vertical
-@Composable
-fun ColumnScope.FillingSpacer() {
-    Spacer(modifier = Modifier.weight(1F))
-}
-
-@Composable
-fun ThreeVerticalSpacer() {
-    Spacer(modifier = Modifier.height(24.dp))
-}
-
-@Composable
-fun TwoVerticalSpacer() {
-    Spacer(modifier = Modifier.height(16.dp))
-}
-
-
-@Composable
-fun OneVerticalSpacer() {
-    Spacer(modifier = Modifier.height(8.dp))
-}
-
-@Composable
-fun HalfVerticalSpacer() {
-    Spacer(modifier = Modifier.height(4.dp))
-}
-
-@Composable
-fun QuarterVerticalSpacer() {
-    Spacer(modifier = Modifier.height(2.dp))
-}
-
 @Composable
 fun CurrentPortfolioCard() {
     Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
@@ -258,14 +199,14 @@ fun CurrentPortfolioCard() {
             Column {
                 Text(
                     text = "Current Portfolio Value",
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
                 )
                 OneVerticalSpacer()
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "₹ 31,627.80",
                         style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                     HalfHorizontalSpacer()
                     Icon(
@@ -275,50 +216,47 @@ fun CurrentPortfolioCard() {
                         tint = Color(0xFF53BB53),
                     )
                 }
-
             }
             TwoVerticalSpacer()
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(color = Color(0xFFD9DBE9))
+                    .background(color = Color(0xFFD9DBE9)),
             )
             TwoVerticalSpacer()
 
             Row(
                 modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(text = "Total Money Invested", style = MaterialTheme.typography.bodySmall)
                     Text(
                         text = "₹ 31,477.50",
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
                 TwoHorizontalSpacer()
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(text = "Repayment Done", style = MaterialTheme.typography.bodySmall)
                     Text(
                         text = "₹ 0.00",
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }
         }
-
     }
 }
-
 
 @Composable
 fun GrowthCard(targetProgress: Float = 0.45F) {
@@ -336,12 +274,12 @@ fun GrowthCard(targetProgress: Float = 0.45F) {
     Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Row(
             modifier = Modifier.height(IntrinsicSize.Min).padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(24.dp)
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             Column(modifier = Modifier.weight(1F)) {
                 Text(
                     text = "Growth",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
                 OneVerticalSpacer()
                 HalfVerticalSpacer()
@@ -349,7 +287,7 @@ fun GrowthCard(targetProgress: Float = 0.45F) {
                     Text(
                         text = "₹ 150.30",
                         style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                     HalfHorizontalSpacer()
                     Icon(
@@ -385,12 +323,12 @@ fun GrowthCard(targetProgress: Float = 0.45F) {
             Column(
                 modifier = Modifier.weight(1F).fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
+                verticalArrangement = Arrangement.Bottom,
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.8F)
-                        .aspectRatio(1F)
+                        .aspectRatio(1F),
                 ) {
                     CircularProgressIndicator(
                         modifier = Modifier.fillMaxSize(),
@@ -402,7 +340,7 @@ fun GrowthCard(targetProgress: Float = 0.45F) {
                     )
                     Row(
                         modifier = Modifier.align(Alignment.Center),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(text = "+0.47%")
                         QuarterHorizontalSpacer()
@@ -423,7 +361,6 @@ fun GrowthCard(targetProgress: Float = 0.45F) {
     }
 }
 
-
 @Composable
 fun InvestmentCard(name: String, icon: String, color: Color) {
     Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
@@ -438,7 +375,7 @@ fun InvestmentCard(name: String, icon: String, color: Color) {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 HalfHorizontalSpacer()
                 Icon(
@@ -451,21 +388,21 @@ fun InvestmentCard(name: String, icon: String, color: Color) {
             TwoVerticalSpacer()
             Row(
                 modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
                         text = "Current Portfolio Value",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "₹ 31,477.50",
                             style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         HalfHorizontalSpacer()
                         Icon(
@@ -479,14 +416,14 @@ fun InvestmentCard(name: String, icon: String, color: Color) {
                 TwoHorizontalSpacer()
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(text = "Growth", style = MaterialTheme.typography.bodySmall)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "₹ 0.00",
                             style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         HalfHorizontalSpacer()
                         Icon(
@@ -503,34 +440,34 @@ fun InvestmentCard(name: String, icon: String, color: Color) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(color = Color(0xFFD9DBE9))
+                    .background(color = Color(0xFFD9DBE9)),
             )
             TwoVerticalSpacer()
             Row(
                 modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(text = "Investment", style = MaterialTheme.typography.bodySmall)
                     Text(
                         text = "₹ 31,477.50",
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
                 TwoHorizontalSpacer()
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(text = "Pre TAX Return", style = MaterialTheme.typography.bodySmall)
                     Text(
                         text = "11 %",
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }
@@ -539,13 +476,11 @@ fun InvestmentCard(name: String, icon: String, color: Color) {
     }
 }
 
-//More on edge-to-edge = https://github.com/android/nowinandroid/pull/817/files
-//Compose KMP Chart: https://github.com/TheChance101/AAY-chart
-
+// More on edge-to-edge = https://github.com/android/nowinandroid/pull/817/files
+// Compose KMP Chart: https://github.com/TheChance101/AAY-chart
 
 @Composable
 fun LineChartSample(modifier: Modifier = Modifier, color: Color) {
-
     val testLineParameters: List<LineParameters> = listOf(
         LineParameters(
             label = "Growth",
@@ -553,7 +488,7 @@ fun LineChartSample(modifier: Modifier = Modifier, color: Color) {
             lineColor = color,
             lineType = LineType.CURVED_LINE,
             lineShadow = true,
-        )
+        ),
     )
 
     Box(modifier = modifier) {
@@ -570,7 +505,7 @@ fun LineChartSample(modifier: Modifier = Modifier, color: Color) {
                 "2014",
                 "2015",
                 "2016",
-                "2017"
+                "2017",
             ),
             legendPosition = LegendPosition.DISAPPEAR,
             animateChart = true,
@@ -582,11 +517,11 @@ fun LineChartSample(modifier: Modifier = Modifier, color: Color) {
             xAxisStyle = TextStyle(
                 fontSize = 14.sp,
                 color = Color(0xFFF5C324),
-                fontWeight = FontWeight.W400
+                fontWeight = FontWeight.W400,
             ),
             yAxisRange = 20,
             oneLineChart = false,
-            gridOrientation = GridOrientation.VERTICAL
+            gridOrientation = GridOrientation.VERTICAL,
         )
     }
 }

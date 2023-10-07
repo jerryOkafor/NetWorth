@@ -1,22 +1,15 @@
 package com.jerryokafor.networth
 
 import MainView
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : ComponentActivity() {
@@ -50,6 +43,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Suppress("MagicNumber")
 private val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
 
+@Suppress("MagicNumber")
 private val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)

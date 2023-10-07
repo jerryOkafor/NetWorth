@@ -1,0 +1,17 @@
+[versions]
+kotlin = "1.9.10"
+
+# code quality
+detekt = "1.22.0"
+ktlint = "0.50.0"
+
+[libraries]
+
+# build logic depedndencies
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+
+[plugins]
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+[bundles]

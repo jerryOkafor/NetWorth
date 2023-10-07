@@ -1,6 +1,6 @@
-import androidx.compose.runtime.Composable
+@file:Suppress("Filename")
 
-actual fun getPlatformName(): String = "Android"
+import androidx.compose.runtime.Composable
 
 @Composable
 fun MainView(onAppThemeChange: (isDarkTheme: Boolean) -> Unit = {}) = App(onAppThemeChange)

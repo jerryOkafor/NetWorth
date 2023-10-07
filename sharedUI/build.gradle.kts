@@ -10,7 +10,7 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "sharedUI"
@@ -27,11 +27,13 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
-                //Chart
+                // Chart
                 implementation("io.github.thechance101:chart:Beta-0.0.5")
                 implementation("io.github.koalaplot:koalaplot-core:0.4.0-dev2")
             }
         }
+
+        @Suppress("UnusedPrivateMember")
         val androidMain by getting {
             dependencies {
                 implementation(compose.preview)
@@ -43,7 +45,11 @@ kotlin {
         }
         val iosX64Main by getting
         val iosArm64Main by getting
+
+        @Suppress("UnusedPrivateMember")
         val iosSimulatorArm64Main by getting
+
+        @Suppress("UnusedPrivateMember")
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)

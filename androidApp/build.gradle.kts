@@ -7,6 +7,7 @@ plugins {
 kotlin {
     androidTarget()
     sourceSets {
+        @Suppress("UnusedPrivateMember")
         val androidMain by getting {
             dependencies {
                 implementation("androidx.activity:activity-ktx:1.8.0-rc01")

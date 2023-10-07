@@ -5,11 +5,21 @@ include(":shared")
 include(":sharedUI")
 
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         gradlePluginPortal()
         mavenCentral()
         google()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == "com.jerryokafor") {
+                useModule(":build-logic:convention")
+            }
+        }
     }
 
     plugins {
@@ -28,7 +38,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version("0.4.0")
+    id("org.gradle.toolchains.foojay-resolver-convention") version ("0.4.0")
 }
 
 dependencyResolutionManagement {

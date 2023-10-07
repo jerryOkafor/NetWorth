@@ -1,0 +1,70 @@
+# Detekt Ruleset documentation https://detekt.github.io/detekt/comments.html
+
+# Defaults overridden from: https://github.com/detekt/detekt/blob/main/detekt-core/src/main/resources/default-detekt-config.yml
+
+complexity:
+  LongParameterList:
+    constructorThreshold: 12
+    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotatedParameter: [ 'Query','Path','Header' ] # ignore mandatory retrofit annotations
+  LongMethod:
+    active: false
+
+#formatting:
+#  android: true
+#  MaximumLineLength:
+#    active: true
+#    maxLineLength: 130
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  EnumNaming:
+    enumEntryPattern: '[_a-zA-Z0-9]*'
+
+style:
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated: [ 'Preview','ThemePreviews' ]
+  ForbiddenComment:
+    allowedPatterns: '[A-Z]{3,}-[\d]+' # allow TODO comments if a ticket number is included
+  MagicNumber:
+    active: true
+  MaxLineLength:
+    active: false
+  UnnecessaryAbstractClass:
+    active: true
+    ignoreAnnotated: [ 'Module','InstallIn' ]
+  UnusedImports:
+    active: true
+
+comments:
+  # Enforcing public API documentation
+  # Guidelines: https://everlong.atlassian.net/wiki/spaces/PM/pages/3264053269/Android+API+documentation+guidelines
+  OutdatedDocumentation:
+    active: true
+    ignoreAnnotated:
+      - 'Preview'
+  UndocumentedPublicClass:
+    active: false
+    ignoreAnnotated:
+      - 'Preview'
+  UndocumentedPublicFunction:
+    active: false
+    ignoreAnnotated:
+      - 'Preview'
+  UndocumentedPublicProperty:
+    active: false
+    ignoreAnnotated:
+      - 'Preview'
+  EndOfSentenceFormat:
+    active: false
+    ignoreAnnotated:
+      - 'Preview'
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+  SwallowedException:
+    active: true
+
+

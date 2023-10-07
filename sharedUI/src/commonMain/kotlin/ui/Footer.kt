@@ -2,8 +2,6 @@
 
 package ui
 
-import ThreeVerticalSpacer
-import TwoVerticalSpacer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,13 +20,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.ThreeVerticalSpacer
+import ui.theme.TwoVerticalSpacer
 
 @Composable
 fun Footer() {
     Box(modifier = Modifier.fillMaxWidth().wrapContentSize()) {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 modifier = Modifier.size(250.dp),
