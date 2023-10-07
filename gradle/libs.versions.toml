@@ -1,11 +1,28 @@
 [versions]
+activity-compose = "1.7.2"
+appcompat = "1.6.1"
+chart = "Beta-0.0.5"
+core-ktx = "1.12.0"
+foundation-layout-android = "1.5.3"
+koalaplot-core = "0.4.0-dev2"
 kotlin = "1.9.10"
 
 # code quality
 detekt = "1.22.0"
 ktlint = "0.50.0"
+material3 = "1.1.2"
+ui-tooling-preview-android = "1.5.3"
 
 [libraries]
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+foundation-layout-android = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "foundation-layout-android" }
+ui-tooling-preview-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "ui-tooling-preview-android" }
+
+chart = { module = "io.github.thechance101:chart", version.ref = "chart" }
+koalaplot-core = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot-core" }
 
 # build logic depedndencies
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }

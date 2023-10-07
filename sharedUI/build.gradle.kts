@@ -24,12 +24,13 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
                 // Chart
-                implementation("io.github.thechance101:chart:Beta-0.0.5")
-                implementation("io.github.koalaplot:koalaplot-core:0.4.0-dev2")
+                implementation(libs.chart)
+                implementation(libs.koalaplot.core)
             }
         }
 
@@ -38,9 +39,9 @@ kotlin {
             dependencies {
                 implementation(compose.preview)
 
-                api("androidx.activity:activity-compose:1.7.2")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
+                api(libs.activity.compose)
+                api(libs.appcompat)
+                api(libs.core.ktx)
             }
         }
         val iosX64Main by getting
@@ -78,8 +79,9 @@ android {
         jvmToolchain(17)
     }
 }
+
 dependencies {
-    implementation("androidx.compose.foundation:foundation-layout-android:1.5.2")
-    implementation("androidx.compose.ui:ui-tooling-preview-android:1.5.2")
-    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation(libs.foundation.layout.android)
+    implementation(libs.ui.tooling.preview.android)
+    implementation(libs.material3)
 }

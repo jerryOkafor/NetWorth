@@ -25,7 +25,7 @@ jobs:
   build-android:
     name: Build, Test & Check (Android)
     runs-on: macos-latest
-    needs: [code-quality]
+    needs: [ code-quality ]
 
     steps:
       - name: Checkout
@@ -35,17 +35,23 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+
+      - name: Run Shared Unit Tests (Android)
+        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
 
       - name: Build android app
         run: ./gradlew assembleDebug
 
-      - name: Run Unit Tests (Android)
-        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
+      - name: Run Android Unit Tests
+        run: ./gradlew :androidApp:testDebugUnitTest
+
+      - name: Run Lint
+        run: ./gradlew :androidApp:lintDebug
 
   build-ios:
     name: Build, Test & Check (iOS)
     runs-on: macos-latest
-    needs: [code-quality]
+    needs: [ code-quality ]
 
     steps:
       - name: Checkout
@@ -56,5 +62,11 @@ jobs:
         with:
           java-version: 17
 
-      - name: Run Unit Tests (iOS)
+      - name: Run shared Unit Tests (iOS)
         run: ./gradlew cleanIosX64Test iosX64Test
+
+      - name: Build iOS app
+        run: xcodebuild -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 12' build
+
+      - name: Run iOS unit tests
+        run: xcodebuild test -project iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 12' build -test-timeouts-enabled YES
