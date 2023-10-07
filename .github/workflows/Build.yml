@@ -62,6 +62,14 @@ jobs:
         with:
           java-version: 17
 
+      - name: Setup Team Account
+        run: |
+          touch "iosApp/Configuration/Config.xccconfig"
+          echo "TEAM_ID=${{ secrets.TEAM_ID }}" >>iosApp/Configuration/Config.xccconfig
+          echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xccconfig
+          echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xccconfig
+
+
       - name: Run shared Unit Tests (iOS)
         run: ./gradlew cleanIosX64Test iosX64Test
 
