@@ -52,8 +52,6 @@ jobs:
     name: Build, Test & Check (iOS)
     runs-on: macos-12
     needs: [ code-quality ]
-    env:
-      TEAM_ID: ${{ secrets.TEAM_ID }}
 
     steps:
       - name: Checkout
@@ -70,7 +68,8 @@ jobs:
           echo "TEAM_ID=$TEAM_ID" >>iosApp/Configuration/Config.xcconfig
           echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
           echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xcconfig
-
+        env:
+          TEAM_ID: ${{ secrets.TEAM_ID }}
 
       - name: Run shared Unit Tests (iOS)
         run: ./gradlew cleanIosX64Test iosX64Test
