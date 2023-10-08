@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.application")
     id("org.jetbrains.compose")
+    alias(libs.plugins.org.jetbrains.kotlinx.kover)
 }
 
 kotlin {
@@ -10,7 +11,7 @@ kotlin {
         @Suppress("UnusedPrivateMember")
         val androidMain by getting {
             dependencies {
-                implementation("androidx.activity:activity-ktx:1.8.0-rc01")
+                implementation(libs.androidx.activity.ktx)
                 implementation(project(":shared"))
                 implementation(project(":sharedUI"))
             }
@@ -40,5 +41,21 @@ android {
     }
 }
 dependencies {
-    implementation("androidx.compose.foundation:foundation-android:1.5.2")
+    implementation(libs.androidx.foundation.android)
+}
+
+
+koverReport {
+    filters {}
+
+    verify {}
+
+    androidReports("debug") {
+        filters {}
+
+        xml { }
+        html { }
+        verify { }
+        log { }
+    }
 }

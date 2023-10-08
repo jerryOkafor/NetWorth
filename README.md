@@ -78,7 +78,7 @@ suggest a way to fix them.
 Open the project in Android Studio and switch the view from **Android** to **Project** to see all
 the files and targets belonging to the project:
 
-<img src="readme_images/open_project_view.png" height="300px">
+<img src="doc/images/open_project_view.png" height="300px">
 
 Your Compose Multiplatform project includes 4 modules:
 
@@ -126,9 +126,9 @@ To run your application on an Android emulator:
 2. In the list of run configurations, select `androidApp`.
 3. Choose your virtual device and click **Run**:
 
-   <img src="readme_images/run_on_android.png" height="60px">
+   <img src="doc/images/run_on_android.png" height="60px">
 
-   <img src="readme_images/android_app_running.png" height="200px">
+   <img src="doc/images/android_app_running.png" height="200px">
 
 <details>
   <summary>Alternatively, use Gradle</summary>
@@ -147,12 +147,12 @@ configuration:
 
 1. In the list of run configurations, select **Edit Configurations**:
 
-   <img src="readme_images/edit_run_config.png" height="200px">
+   <img src="doc/images/edit_run_config.png" height="200px">
 
 2. Navigate to **iOS Application** | **iosApp**.
 3. In the **Execution target** list, select your target device. Click **OK**:
 
-   <img src="readme_images/target_device.png">
+   <img src="doc/images/target_device.png">
 
 4. The `iosApp` run configuration is now available. Click **Run** next to your virtual device
 

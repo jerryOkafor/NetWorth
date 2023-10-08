@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
+    alias(libs.plugins.org.jetbrains.kotlinx.kover)
 }
 
 kotlin {
@@ -84,4 +85,19 @@ dependencies {
     implementation(libs.foundation.layout.android)
     implementation(libs.ui.tooling.preview.android)
     implementation(libs.material3)
+}
+
+koverReport {
+    filters {}
+
+    verify {}
+
+    defaults {
+        mergeWith("debug")
+
+        xml { }
+        html { }
+        verify { }
+        log { }
+    }
 }

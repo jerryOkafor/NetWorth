@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    alias(libs.plugins.org.jetbrains.kotlinx.kover)
 }
 
 kotlin {
@@ -64,5 +65,20 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+    }
+}
+
+koverReport {
+    filters {}
+
+    verify {}
+
+    defaults {
+        mergeWith("debug")
+
+        xml { }
+        html { }
+        verify { }
+        log { }
     }
 }

@@ -35,6 +35,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Run Shared Unit Tests (Android)
         run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
@@ -61,6 +65,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Setup Team Account
         env:
@@ -96,3 +104,31 @@ jobs:
             -destination name='iPhone 14 Pro' \
             -test-timeouts-enabled YES \
             build
+
+  coverage-report:
+    name: Code coverage report & verification
+    runs-on: macos-latest
+    needs: [ build-android, build-ios ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build -x koverVerify  # skipping koverVerify to not fail if the coverage has lowered
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: build/reports/kover/report.xml
