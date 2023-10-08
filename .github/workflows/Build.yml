@@ -32,16 +32,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set Up JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: "zulu",
           java-version: 17
           cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Run Shared Unit Tests (Android)
-        run: ./gradlew cleanTestDebugUnitTest testDebugUnitTest
 
       - name: Build android app
         run: ./gradlew assembleDebug
@@ -62,13 +57,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set Up JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: "zulu",
           java-version: 17
           cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
 
       - name: Setup Team Account
         env:
@@ -79,10 +72,6 @@ jobs:
           echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
           echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xcconfig
           cat iosApp/Configuration/Config.xcconfig
-
-
-      - name: Run shared Unit Tests (iOS)
-        run: ./gradlew cleanIosX64Test iosX64Test
 
       - name: Build iOS app
         run: |
@@ -115,20 +104,21 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set Up JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: "zulu",
           java-version: 17
           cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Run all tests
+        run: ./gradlew allTests
 
-      - name: Build with Gradle
-        run: ./gradlew build -x koverVerify  # skipping koverVerify to not fail if the coverage has lowered
+      - name: Generate Coverage Report
+        run: ./gradlew koverXmlReport
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          files: build/reports/kover/report.xml
+          files: "**/build/reports/kover/report.xml"
