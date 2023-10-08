@@ -34,7 +34,7 @@ jobs:
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu",
+          distribution: "zulu"
           java-version: 17
           cache: gradle
 
@@ -59,7 +59,7 @@ jobs:
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu",
+          distribution: "zulu"
           java-version: 17
           cache: gradle
 
@@ -106,7 +106,7 @@ jobs:
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu",
+          distribution: "zulu"
           java-version: 17
           cache: gradle
 
