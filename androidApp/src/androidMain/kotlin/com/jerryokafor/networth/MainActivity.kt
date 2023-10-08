@@ -21,8 +21,8 @@ class MainActivity : ComponentActivity() {
             val isDarkTheme = remember { mutableStateOf(true) }
             MainView { isDark ->
                 isDarkTheme.value = isDark
-                WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
-                    !isDark
+                WindowInsetsControllerCompat(window, window.decorView)
+                    .isAppearanceLightStatusBars = !isDark
             }
 
             DisposableEffect(isDarkTheme) {
