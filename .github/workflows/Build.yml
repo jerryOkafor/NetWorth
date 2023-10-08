@@ -50,7 +50,7 @@ jobs:
 
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: [ code-quality ]
 
     steps:
@@ -83,7 +83,7 @@ jobs:
             -configuration Debug \
             -scheme iosApp \
             -sdk iphoneos \
-            -destination name='iPhone 12 Pro' \
+            -destination name='iPhone 14 Pro' \
             build
 
       - name: Run iOS unit tests
@@ -93,6 +93,6 @@ jobs:
             -configuration Debug \
             -scheme iosApp \
             -sdk iphoneos \
-            -destination name='iPhone 12 Pro' \
+            -destination name='iPhone 14 Pro' \
             -test-timeouts-enabled YES \
             build
