@@ -81,7 +81,7 @@ jobs:
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
             -configuration Debug \
-            -scheme iosApp 
+            -scheme iosApp \
             -sdk iphoneos \
             -destination name='iPhone 12' \
             build
