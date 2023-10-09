@@ -26,7 +26,7 @@ platform :ios do
         gym(
             project: './iosApp/iosApp.xcodeproj',
             scheme: 'iosApp',
-            configuration: "Debug",
+            configuration: "Release",
             export_method: 'ad-hoc',
             export_options: {
                 provisioningProfiles: {
@@ -45,6 +45,7 @@ platform :ios do
 
    lane :tests do
      setup_ci(force: true) if ENV['CI']
+      match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
      scan(
         project: './iosApp/iosApp.xcodeproj',
         scheme: 'iosApp',
