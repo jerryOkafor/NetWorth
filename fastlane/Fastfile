@@ -9,6 +9,9 @@ end
 platform :ios do
    # iOS Lanes
 
+    # Define a packages_path in the root of our repository
+    packages_path = "#{File.expand_path("..", Dir.pwd)}/packages_cache"
+
    desc 'Fetch certificates and provisioning profiles'
    lane :certificates do
      match(app_identifier: 'com.jerryokafor.networth', type: 'development', readonly: true)
@@ -18,9 +21,6 @@ platform :ios do
      private_lane :build do
         setup_ci(force: true) if ENV['CI']
 
-        # Define a packages_path in the root of our repository
-        packages_path = "#{File.expand_path("..", Dir.pwd)}/packages_cache"
-
         match(type: 'adhoc', app_identifier: 'com.jerryokafor.networth', readonly: true)
         # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
         gym(
@@ -29,7 +29,7 @@ platform :ios do
             configuration: "Debug",
             export_method: 'ad-hoc',
             cloned_source_packages_path: packages_path,
-            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"]
+            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
             export_options: {
                 provisioningProfiles: {
                   "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
@@ -50,7 +50,7 @@ platform :ios do
         scheme: 'iosApp',
         configuration: "Debug",
         cloned_source_packages_path: packages_path,
-        skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"]
+        skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
         devices: ['iPhone 12 Pro']
         )
    end
