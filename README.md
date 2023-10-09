@@ -261,3 +261,4 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 [How to build Gradle projects with GitHub Actions](https://gradlehero.com/build-gradle-projects-with-github-actions/)
 [A Better Way to Use Gradle With Github Actions](https://blog.gradle.org/gh-actions)
 [Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
+[Effective Swift Package Manager caching with Fastlane and Github Actions](https://itnext.io/effective-swift-package-manager-caching-with-fastlane-and-github-actions-b241585f0a4c)
