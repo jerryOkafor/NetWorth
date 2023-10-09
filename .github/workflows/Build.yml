@@ -69,6 +69,17 @@ jobs:
           java-version: 17
           cache: gradle
 
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
+          bundler-cache: true
+
       - name: Check Env
         run: |
           fastlane env

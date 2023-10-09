@@ -2,7 +2,7 @@ git_url("https://github.com/jerryOkafor/apple-certificates.git")
 
 storage_mode("git")
 
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
+type("adhoc") # The default type, can be: appstore, adhoc, enterprise or development
 
 # app_identifier(["com.jerryokafor.networth"])
 # username("jerryhanksokafor@gmail.com") # Your Apple Developer Portal username

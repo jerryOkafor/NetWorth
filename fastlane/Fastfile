@@ -16,20 +16,13 @@ platform :ios do
 
    desc 'Build the iOS application.'
      private_lane :build do
-        # match(app_identifier: 'com.jerryokafor.networth', type: 'development', readonly: true)
         match(app_identifier: 'com.jerryokafor.networth', type: 'adhoc', readonly: true)
         # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
         gym(
             project: './iosApp/iosApp.xcodeproj',
             scheme: 'iosApp',
             export_method: 'ad-hoc',
-            xcargs: 'build-for-testing',
-            include_bitcode: false,
-            export_options: {
-                uploadBitcode: false,
-                uploadSymbols: true,
-                compileBitcode: false
-            }
+            xcargs: 'build-for-testing'
             )
         end
 
