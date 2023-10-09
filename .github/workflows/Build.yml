@@ -13,7 +13,7 @@ concurrency:
 jobs:
   code-quality:
     name: Verify Code Quality
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
 
   build-android:
     name: Build, Test & Check (Android)
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: [ code-quality ]
 
     steps:
@@ -60,7 +60,7 @@ jobs:
 
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-13
+    runs-on: macos-12
     needs: [ code-quality ]
 
     steps:
@@ -133,7 +133,7 @@ jobs:
 
   coverage-report:
     name: Code coverage report & verification
-    runs-on: macos-latest
+    runs-on: macos-12
     needs: [ build-android, build-ios ]
 
     steps:
