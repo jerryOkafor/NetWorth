@@ -16,7 +16,7 @@ platform :ios do
 
    desc 'Build the iOS application.'
      private_lane :build do
-        setup_ci(force: true)
+        setup_ci(force: true) if ENV['CI']
         match(type: 'adhoc', app_identifier: 'com.jerryokafor.networth', readonly: true)
         # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
         gym(
@@ -37,6 +37,7 @@ platform :ios do
       end
 
    lane :tests do
+     setup_ci(force: true) if ENV['CI']
      run_tests(
         project: './iosApp/iosApp.xcodeproj',
         scheme: 'iosApp',
