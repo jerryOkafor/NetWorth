@@ -69,6 +69,10 @@ jobs:
           java-version: 17
           cache: gradle
 
+      - name: Check Env
+        run: |
+          bundle exec fastlane env
+
       - name: Decrypt large secret
         run: |
           ./.github/scripts/decrypt_secret.sh
