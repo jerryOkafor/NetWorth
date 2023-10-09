@@ -1,0 +1,72 @@
+fastlane_version '2.216.0 '
+
+before_all do
+  # ensure_git_branch
+  # ensure_git_status_clean
+  # git_pull
+end
+
+platform :ios do
+   # iOS Lanes
+
+    # Define a packages_path in the root of our repository
+    packages_path = "#{File.expand_path("..", Dir.pwd)}/packages_cache"
+
+   desc 'Fetch certificates and provisioning profiles'
+   lane :certificates do
+     match(app_identifier: 'com.jerryokafor.networth', type: 'development', readonly: true)
+   end
+
+   desc 'Build the iOS application.'
+     private_lane :build do
+        setup_ci(force: true) if ENV['CI']
+
+        match(type: 'adhoc', app_identifier: 'com.jerryokafor.networth', readonly: true)
+        # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
+        gym(
+            project: './iosApp/iosApp.xcodeproj',
+            scheme: 'iosApp',
+            configuration: "Release",
+            export_method: 'ad-hoc',
+            export_options: {
+                provisioningProfiles: {
+                  "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
+                }
+              },
+            cloned_source_packages_path: packages_path,
+            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
+            )
+        end
+
+   desc 'Build iOS App'
+     lane :buildApp do
+       build
+      end
+
+   lane :tests do
+     setup_ci(force: true) if ENV['CI']
+     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+     run_tests(
+        project: './iosApp/iosApp.xcodeproj',
+        scheme: 'iosApp',
+        configuration: "Debug",
+        cloned_source_packages_path: packages_path,
+        skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
+        devices: ['iPhone 12 Pro']
+        )
+   end
+
+end
+
+platform :android do
+  # Android Lanes
+  lane :beta do
+
+  gradle(task: ':android:clean')
+  
+  gradle(
+    task: ':android:assemble',
+    build_type: 'Release'
+    )
+    end
+end

@@ -1,5 +1,6 @@
 [![official project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build NetWorth (Build Test & Check)](https://github.com/jerryOkafor/NetWorth/actions/workflows/Build.yml/badge.svg)](https://github.com/jerryOkafor/NetWorth/actions/workflows/Build.yml)
 [![codecov](https://codecov.io/gh/jerryOkafor/NetWorth/graph/badge.svg?token=GK20I9PQUO)](https://codecov.io/gh/jerryOkafor/NetWorth)
 
 # NetWorth, A [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) mobile application
@@ -13,12 +14,15 @@
 > on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
 ## Screenshots
+
 ### Android
+
 <p align="center">
   <img src="doc/images/networth_android.png"  alt="NetWorth Android screenshot sample"/>
 </p>
 
 ### iOS
+
 <p align="center">
   <img src="doc/images/networth_iOS.png"  alt="NetWorth Android iOS sample"/>
 </p>
@@ -244,7 +248,17 @@ If you need to change this option after you open the project in Android Studio, 
 To configure advanced settings, use Xcode. After opening the project in Android Studio,
 open the `iosApp/iosApp.xcworkspace` file in Xcode and make changes there.
 
+### Run to encrypt `Config.xcconfig` and commit to git
+
+```bash
+gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
+```
+
 # References
 
 [Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome)
 [Testing KMP App](https://kotlinlang.org/docs/multiplatform-run-tests.html)
+[How to build Gradle projects with GitHub Actions](https://gradlehero.com/build-gradle-projects-with-github-actions/)
+[A Better Way to Use Gradle With Github Actions](https://blog.gradle.org/gh-actions)
+[Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
+[Effective Swift Package Manager caching with Fastlane and Github Actions](https://itnext.io/effective-swift-package-manager-caching-with-fastlane-and-github-actions-b241585f0a4c)

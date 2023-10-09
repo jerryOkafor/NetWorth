@@ -2,6 +2,8 @@ name: Build NetWorth (Build Test & Check)
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 concurrency:
@@ -11,36 +13,41 @@ concurrency:
 jobs:
   code-quality:
     name: Verify Code Quality
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Code Quality
         run: ./gradlew detekt ktlintCheck
 
   build-android:
     name: Build, Test & Check (Android)
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: [ code-quality ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: 17
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Build android app
         run: ./gradlew assembleDebug
@@ -58,61 +65,98 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: 17
-          cache: gradle
 
-      - name: Setup Team Account
-        env:
-          TEAM_ID: ${{ secrets.TEAM_ID }}
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
+
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Setup Fastlane
+        run: bundle install
+
+      - name: Decrypt large secret
         run: |
-          touch "iosApp/Configuration/Config.xcconfig"
-          echo "TEAM_ID=$TEAM_ID" >>iosApp/Configuration/Config.xcconfig
-          echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
-          echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xcconfig
-          cat iosApp/Configuration/Config.xcconfig
+          ./.github/scripts/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      - name: Cache iOS packages
+        uses: actions/cache@v3
+        id: packages-cache
+        with:
+          path: packages_cache
+          key: ${{ runner.os }}-packages-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-
 
       - name: Build iOS app
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
+          CI: true
         run: |
-          xcodebuild \
-            -project iosApp/iosApp.xcodeproj \
-            -configuration Debug \
-            -scheme iosApp \
-            -sdk iphoneos \
-            -destination name='iPhone 14 Pro' \
-            build
+          bundle exec fastlane ios buildApp
+      #        run: |
+      #          xcodebuild \
+      #            -project iosApp/iosApp.xcodeproj \
+      #            -configuration Debug \
+      #            -scheme iosApp \
+      #            -sdk iphoneos \
+      #            -destination name='iPhone 14 Pro' \
+      #            build
 
       - name: Run iOS unit tests
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
+          CI: true
         run: |
-          xcodebuild clean test \
-            -project iosApp/iosApp.xcodeproj \
-            -configuration Debug \
-            -scheme iosApp \
-            -sdk iphoneos \
-            -destination name='iPhone 14 Pro' \
-            -test-timeouts-enabled YES \
-            build
+          bundle exec fastlane ios tests
+  #        run: |
+  #          xcodebuild clean test \
+  #            -project iosApp/iosApp.xcodeproj \
+  #            -configuration Debug \
+  #            -scheme iosApp \
+  #            -sdk iphoneos \
+  #            -destination name='iPhone 14 Pro' \
+  #            -test-timeouts-enabled YES \
+  #            build
 
   coverage-report:
     name: Code coverage report & verification
-    runs-on: macos-latest
+    runs-on: macos-12
     needs: [ build-android, build-ios ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: 17
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Run all tests
         run: ./gradlew allTests

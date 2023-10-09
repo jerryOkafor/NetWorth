@@ -1,0 +1,22 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/gym/#gymfile
+
+# In general, you can use the options available
+# fastlane gym --help
+
+# Remove the # in front of the line to enable the option
+
+scheme("iosApp")
+
+# sdk("iphoneos9.0")
+
+clean(true)
+
+# Specify the path to store .ipa file
+# output_directory("./")
+
+# Excludes bitcode from the build
+include_bitcode(false)
+
+# Excludes symbols from the build.
+include_symbols(false)

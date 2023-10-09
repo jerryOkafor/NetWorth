@@ -1,13 +1,15 @@
 [versions]
-activity-compose = "1.7.2"
-activity-ktx = "1.8.0-rc01"
+kotlin = "1.9.20-Beta2"
+
+activity-compose = "1.8.0"
+activity-ktx = "1.8.0"
 appcompat = "1.6.1"
 chart = "Beta-0.0.5"
 core-ktx = "1.12.0"
-foundation-android = "1.5.3"
-foundation-layout-android = "1.5.3"
+compose-multiplatform = "1.5.3"
+compose-multiplatform-compiler = "1.5.10-beta02"
 koalaplot-core = "0.4.0-dev2"
-kotlin = "1.9.10"
+
 
 # code quality
 detekt = "1.22.0"
@@ -15,17 +17,16 @@ ktlint = "0.50.0"
 kover = "0.7.3"
 
 material3 = "1.1.2"
-ui-tooling-preview-android = "1.5.3"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-ktx" }
-androidx-foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "foundation-android" }
+androidx-foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "compose-multiplatform" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-foundation-layout-android = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "foundation-layout-android" }
-ui-tooling-preview-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "ui-tooling-preview-android" }
+foundation-layout-android = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "compose-multiplatform" }
+ui-tooling-preview-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "compose-multiplatform" }
 
 chart = { module = "io.github.thechance101:chart", version.ref = "chart" }
 koalaplot-core = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot-core" }
@@ -35,6 +36,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 
 [plugins]
+org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform-compiler" }
 io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 org-jetbrains-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 
