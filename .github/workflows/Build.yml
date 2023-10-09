@@ -2,6 +2,8 @@ name: Build NetWorth (Build Test & Check)
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 concurrency:
@@ -78,27 +80,33 @@ jobs:
           cat iosApp/Configuration/Config.xcconfig
 
       - name: Build iOS app
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: fastlane ios buildApp
-#        run: |
-#          xcodebuild \
-#            -project iosApp/iosApp.xcodeproj \
-#            -configuration Debug \
-#            -scheme iosApp \
-#            -sdk iphoneos \
-#            -destination name='iPhone 14 Pro' \
-#            build
+      #        run: |
+      #          xcodebuild \
+      #            -project iosApp/iosApp.xcodeproj \
+      #            -configuration Debug \
+      #            -scheme iosApp \
+      #            -sdk iphoneos \
+      #            -destination name='iPhone 14 Pro' \
+      #            build
 
       - name: Run iOS unit tests
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: fastlane ios tests
-#        run: |
-#          xcodebuild clean test \
-#            -project iosApp/iosApp.xcodeproj \
-#            -configuration Debug \
-#            -scheme iosApp \
-#            -sdk iphoneos \
-#            -destination name='iPhone 14 Pro' \
-#            -test-timeouts-enabled YES \
-#            build
+  #        run: |
+  #          xcodebuild clean test \
+  #            -project iosApp/iosApp.xcodeproj \
+  #            -configuration Debug \
+  #            -scheme iosApp \
+  #            -sdk iphoneos \
+  #            -destination name='iPhone 14 Pro' \
+  #            -test-timeouts-enabled YES \
+  #            build
 
   coverage-report:
     name: Code coverage report & verification
