@@ -45,8 +45,8 @@ platform :ios do
 
    lane :tests do
      setup_ci(force: true) if ENV['CI']
-      match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-     scan(
+     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+     run_tests(
         project: './iosApp/iosApp.xcodeproj',
         scheme: 'iosApp',
         configuration: "Debug",
