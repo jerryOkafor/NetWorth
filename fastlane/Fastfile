@@ -28,6 +28,8 @@ platform :ios do
             scheme: 'iosApp',
             configuration: "Release",
             export_method: 'ad-hoc',
+            include_bitcode: true,
+            include_symbols: true,
             export_options: {
                 provisioningProfiles: {
                   "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
