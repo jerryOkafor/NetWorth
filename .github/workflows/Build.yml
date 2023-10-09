@@ -71,7 +71,7 @@ jobs:
 
       - name: Check Env
         run: |
-          bundle exec fastlane env
+          fastlane env
 
       - name: Decrypt large secret
         run: |
