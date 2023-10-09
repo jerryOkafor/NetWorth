@@ -69,15 +69,15 @@ jobs:
           java-version: 17
           cache: gradle
 
-      - name: Setup Team Account
-        env:
-          TEAM_ID: ${{ secrets.TEAM_ID }}
-        run: |
-          touch "iosApp/Configuration/Config.xcconfig"
-          echo "TEAM_ID=$TEAM_ID" >>iosApp/Configuration/Config.xcconfig
-          echo "BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
-          echo "APP_NAME=NetWorth" >>iosApp/Configuration/Config.xcconfig
-          cat iosApp/Configuration/Config.xcconfig
+#      - name: Setup Team Account
+#        env:
+#          TEAM_ID: ${{ secrets.TEAM_ID }}
+#        run: |
+#          touch 'iosApp/Configuration/Config.xcconfig'
+#          echo 'TEAM_ID=$TEAM_ID' >>iosApp/Configuration/Config.xcconfig
+#          echo 'BUNDLE_ID=com.jerryokafor.networth" >>iosApp/Configuration/Config.xcconfig
+#          echo 'APP_NAME=NetWorth' >>iosApp/Configuration/Config.xcconfig
+#          cat iosApp/Configuration/Config.xcconfig
 
       - name: Build iOS app
         env:
