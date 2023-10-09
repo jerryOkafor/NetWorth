@@ -10,7 +10,7 @@ build/
 iosApp/iosApp.xcworkspace/*
 iosApp/iosApp.xcodeproj/*
 !iosApp/iosApp.xcodeproj/project.pbxproj
-#iosApp/Configuration/Config.xcconfig
+iosApp/Configuration/Config.xcconfig
 
 
 *.ipa

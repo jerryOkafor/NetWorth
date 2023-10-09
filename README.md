@@ -13,12 +13,15 @@
 > on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
 ## Screenshots
+
 ### Android
+
 <p align="center">
   <img src="doc/images/networth_android.png"  alt="NetWorth Android screenshot sample"/>
 </p>
 
 ### iOS
+
 <p align="center">
   <img src="doc/images/networth_iOS.png"  alt="NetWorth Android iOS sample"/>
 </p>
@@ -243,6 +246,12 @@ If you need to change this option after you open the project in Android Studio, 
 
 To configure advanced settings, use Xcode. After opening the project in Android Studio,
 open the `iosApp/iosApp.xcworkspace` file in Xcode and make changes there.
+
+### Run to encrypt `Config.xcconfig` and commit to git
+
+```bash
+gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
+```
 
 # References
 
