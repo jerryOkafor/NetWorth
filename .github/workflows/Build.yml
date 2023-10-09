@@ -70,7 +70,8 @@ jobs:
           cache: gradle
 
       - name: Decrypt large secret
-        run: ./github/scripts/decrypt_secret.sh
+        run: |
+          ./.github/scripts/decrypt_secret.sh
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
