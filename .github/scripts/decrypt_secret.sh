@@ -8,5 +8,7 @@
 echo $HOME
 echo $PWD
 
+ls -a
+
 gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
---output $Home/./././iosApp/Configuration/Config.xcconfig ../iosApp/Configuration/Config.xcconfig.gpg
+--output iosApp/Configuration/Config.xcconfig iosApp/Configuration/Config.xcconfig.gpg
