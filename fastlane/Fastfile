@@ -28,13 +28,13 @@ platform :ios do
             scheme: 'iosApp',
             configuration: "Debug",
             export_method: 'ad-hoc',
-            cloned_source_packages_path: packages_path,
-            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
             export_options: {
                 provisioningProfiles: {
                   "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
                 }
-              }
+              },
+            cloned_source_packages_path: packages_path,
+            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
             )
         end
 
