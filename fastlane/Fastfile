@@ -22,7 +22,14 @@ platform :ios do
         gym(
             project: './iosApp/iosApp.xcodeproj',
             scheme: 'iosApp',
-            export_method: 'ad-hoc'
+            export_method: 'ad-hoc',
+            xcargs: 'build-for-testing',
+            include_bitcode: false,
+            export_options: {
+                uploadBitcode: false,
+                uploadSymbols: true,
+                compileBitcode: false
+            }
             )
         end
 
@@ -35,7 +42,8 @@ platform :ios do
      run_tests(
         project: './iosApp/iosApp.xcodeproj',
         scheme: 'iosApp',
-        devices: ['iPhone 12 Pro'])
+        devices: ['iPhone 12 Pro']
+        )
    end
 
 end
