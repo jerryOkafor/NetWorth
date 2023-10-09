@@ -41,7 +41,7 @@ platform :ios do
      run_tests(
         project: './iosApp/iosApp.xcodeproj',
         scheme: 'iosApp',
-        devices: ['iPhone 12 Pro']
+        devices: ['iPhone 14 Pro']
         )
    end
 

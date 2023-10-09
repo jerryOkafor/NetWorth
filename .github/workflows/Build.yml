@@ -25,6 +25,9 @@ jobs:
           distribution: "zulu"
           java-version: 17
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
+
       - name: Code Quality
         run: ./gradlew detekt ktlintCheck
 
@@ -43,6 +46,9 @@ jobs:
           distribution: "zulu"
           java-version: 17
           cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Build android app
         run: ./gradlew assembleDebug
@@ -68,6 +74,9 @@ jobs:
           distribution: "zulu"
           java-version: 17
           cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Setup XCode
         uses: maxim-lobanov/setup-xcode@v1
@@ -139,6 +148,9 @@ jobs:
           distribution: "zulu"
           java-version: 17
           cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
 
       - name: Run all tests
         run: ./gradlew allTests

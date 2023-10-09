@@ -257,3 +257,5 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 
 [Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome)
 [Testing KMP App](https://kotlinlang.org/docs/multiplatform-run-tests.html)
+[A Better Way to Use Gradle With Github Actions](https://blog.gradle.org/gh-actions)
+[Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
