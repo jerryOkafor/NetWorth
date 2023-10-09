@@ -71,6 +71,8 @@ jobs:
 
       - name: Decrypt large secret
         run: |
+          echo $HOME
+          echo $PWD
           ./.github/scripts/decrypt_secret.sh
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
