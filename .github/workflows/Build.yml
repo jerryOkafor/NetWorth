@@ -90,10 +90,6 @@ jobs:
       - name: Setup Fastlane
         run: bundle install
 
-      - name: Check Env
-        run: |
-          bundle exec fastlane env
-
       - name: Decrypt large secret
         run: |
           ./.github/scripts/decrypt_secret.sh
@@ -104,6 +100,7 @@ jobs:
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          CI: true
         run: |
           bundle exec fastlane ios buildApp
       #        run: |
@@ -119,6 +116,7 @@ jobs:
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          CI: true
         run: |
           bundle exec fastlane ios tests
   #        run: |
