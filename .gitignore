@@ -13,6 +13,7 @@ iosApp/iosApp.xcodeproj/*
 iosApp/Configuration/Config.xcconfig
 
 
+dist/
 *.ipa
 *.dSYM.*
 /fastlane/test_output/

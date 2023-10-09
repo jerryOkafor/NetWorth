@@ -112,7 +112,7 @@ jobs:
           HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
           CI: true
         run: |
-          bundle exec fastlane ios buildApp
+          bundle exec fastlane ios build_for_test
       #        run: |
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
@@ -129,7 +129,7 @@ jobs:
           HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
           CI: true
         run: |
-          bundle exec fastlane ios tests
+          bundle exec fastlane ios test_without_building
   #        run: |
   #          xcodebuild clean test \
   #            -project iosApp/iosApp.xcodeproj \

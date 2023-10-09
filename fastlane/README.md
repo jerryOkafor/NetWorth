@@ -39,6 +39,22 @@ Build iOS App
 
 
 
+### ios build_for_test
+
+```sh
+[bundle exec] fastlane ios build_for_test
+```
+
+Build for test
+
+### ios test_without_building
+
+```sh
+[bundle exec] fastlane ios test_without_building
+```
+
+Run specific Tests without building
+
 ----
 
 

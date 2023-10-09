@@ -58,6 +58,29 @@ platform :ios do
         )
    end
 
+   desc "Build for test"
+   lane :build_for_test do
+     run_tests(
+       project: './iosApp/iosApp.xcodeproj',
+       scheme: 'iosApp',
+       configuration: "Debug",
+       devices: ['iPhone 12 Pro'],
+       derived_data_path: "dist",
+       build_for_testing: true
+     )
+   end
+
+   desc "Run specific Tests without building"
+   lane :test_without_building do |options|
+     run_tests(
+       project: './iosApp/iosApp.xcodeproj',
+       scheme: 'iosApp',
+       configuration: "Debug",
+       derived_data_path: "dist",
+       test_without_building: true
+     )
+   end
+
 end
 
 platform :android do
