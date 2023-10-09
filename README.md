@@ -1,5 +1,6 @@
 [![official project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build NetWorth (Build Test & Check)](https://github.com/jerryOkafor/NetWorth/actions/workflows/Build.yml/badge.svg)](https://github.com/jerryOkafor/NetWorth/actions/workflows/Build.yml)
 [![codecov](https://codecov.io/gh/jerryOkafor/NetWorth/graph/badge.svg?token=GK20I9PQUO)](https://codecov.io/gh/jerryOkafor/NetWorth)
 
 # NetWorth, A [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) mobile application
@@ -257,5 +258,6 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 
 [Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome)
 [Testing KMP App](https://kotlinlang.org/docs/multiplatform-run-tests.html)
+[How to build Gradle projects with GitHub Actions](https://gradlehero.com/build-gradle-projects-with-github-actions/)
 [A Better Way to Use Gradle With Github Actions](https://blog.gradle.org/gh-actions)
 [Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
