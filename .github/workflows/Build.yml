@@ -96,23 +96,27 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
-      - name: Cache iOS packages
-        uses: actions/cache@v3
-        id: packages-cache
-        with:
-          path: packages_cache
-          key: ${{ runner.os }}-packages-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-packages-
+      - name: Build and Test
+        run: xcodebuild test \
+          -project iosApp.xcodeproj \
+          -scheme iosApp \
+          -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' \
+          build \
+          test
 
-      - name: Build iOS app
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
         env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
-          CI: true
-        run: |
-          bundle exec fastlane ios build_for_test
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      #      - name: Build iOS app
+      #        env:
+      #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      #          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
+      #          CI: true
+      #        run: |
+      #          bundle exec fastlane ios build_for_test
       #        run: |
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
@@ -122,14 +126,14 @@ jobs:
       #            -destination name='iPhone 14 Pro' \
       #            build
 
-      - name: Run iOS unit tests
-        env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
-          CI: true
-        run: |
-          bundle exec fastlane ios test_without_building
+  #      - name: Run iOS unit tests
+  #        env:
+  #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+  #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  #          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
+  #          CI: true
+  #        run: |
+  #          bundle exec fastlane ios test_without_building
   #        run: |
   #          xcodebuild clean test \
   #            -project iosApp/iosApp.xcodeproj \

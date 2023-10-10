@@ -2,13 +2,14 @@
 //  iosAppTests.swift
 //  iosAppTests
 //
-//  Created by Jerry Okafor on 07/10/2023.
+//  Created by Jerry Okafor on 09/10/2023.
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
 import XCTest
+@testable import NetWorth
 
-final class iosAppTests: XCTestCase {
+final class IosAppTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
