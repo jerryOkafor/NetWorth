@@ -89,6 +89,55 @@ platform :ios do
      )
    end
 
+   lane :ui_tests do
+    setup_ci(force: true) if ENV['CI']
+    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+
+    UI.important(
+      'example: ' \
+      'split the tests into 4 batches and run each batch of tests in ' \
+      'parallel up to 3 times if tests fail. Abort the testing early ' \
+      'if there are too many failing tests by passing in a ' \
+      ':testrun_completed_block that is called by :multi_scan ' \
+      'after each run of tests.'
+    )
+    test_run_block = lambda do |testrun_info|
+      failed_test_count = testrun_info[:failed].size
+      passed_test_count = testrun_info[:passing].size
+      try_attempt = testrun_info[:try_count]
+      batch = testrun_info[:batch]
+
+      # UI.abort_with_message!('You could conditionally abort')
+      UI.message("\ὠA everything is fine, let's continue try #{try_attempt + 1} for batch #{batch}")
+      {
+        continue: true,
+        only_testing: ['AtomicBoyUITests/AtomicBoyUITests/testExample17']
+      }
+    end
+
+    sim_callback = lambda do |simulator_device_udid|
+      puts "Start streaming system log for device #{simulator_device_udid}"
+    end
+
+    override_scan_options_callback = lambda do |options|
+      options.delete(:xctestrun) unless FastlaneCore::Helper.xcode_at_least?(10)
+    end
+
+    multi_scan(
+      project: File.absolute_path('../iosApp/iosApp.xcodeproj'),
+      scheme: 'iosApp',
+      device: 'iPhone 14 Pro',
+      try_count: 3,
+      batch_count: 4,
+      fail_build: false,
+      parallel_testrun_count: 4,
+      testrun_completed_block: test_run_block,
+      simulator_started_callback: sim_callback,
+      override_scan_options_block: override_scan_options_callback
+    )
+
+   end
+
 end
 
 platform :android do

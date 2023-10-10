@@ -55,6 +55,14 @@ Build for test
 
 Run specific Tests without building
 
+### ios ui_tests
+
+```sh
+[bundle exec] fastlane ios ui_tests
+```
+
+
+
 ----
 
 

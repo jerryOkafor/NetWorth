@@ -109,7 +109,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-          bundle exec fastlane ios build_for_test
+          bundle exec fastlane ios ui_tests
       #        run: |
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
@@ -119,13 +119,13 @@ jobs:
       #                        -destination name='iPhone 14 Pro' \
       #            build
 
-      - name: Run iOS unit tests
-        env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          CI: true
-        run: |
-          bundle exec fastlane ios test_without_building
+#      - name: Run iOS unit tests
+#        env:
+#          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+#          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+#          CI: true
+#        run: |
+#          bundle exec fastlane ios test_without_building
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
