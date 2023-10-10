@@ -102,7 +102,6 @@ jobs:
           -project iosApp/iosApp.xcodeproj \
           -configuration Debug \
           -scheme iosApp \
-          -sdk iphoneos \
           -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.3' \
           build \
           test
