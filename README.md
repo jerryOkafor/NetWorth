@@ -263,3 +263,4 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 [Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
 [Effective Swift Package Manager caching with Fastlane and Github Actions](https://itnext.io/effective-swift-package-manager-caching-with-fastlane-and-github-actions-b241585f0a4c)
 [][https://circleci.com/blog/how-lightspeed-optimized-ios-testing/](https://circleci.com/blog/how-lightspeed-optimized-ios-testing/)
+[][KMMBridge Quick Start - CocoaPods](https://touchlab.co/kmmbridge-quick-start-cocoapods)

@@ -60,11 +60,15 @@ platform :ios do
 
    desc "Build for test"
    lane :build_for_test do
+
+    setup_ci(force: true) if ENV['CI']
+    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+
      run_tests(
        project: './iosApp/iosApp.xcodeproj',
        scheme: 'iosApp',
        configuration: "Debug",
-       devices: ['iPhone 12 Pro'],
+       devices: ['iPhone 14 Pro'],
        derived_data_path: "dist",
        build_for_testing: true
      )
@@ -72,6 +76,10 @@ platform :ios do
 
    desc "Run specific Tests without building"
    lane :test_without_building do |options|
+
+     setup_ci(force: true) if ENV['CI']
+     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+
      run_tests(
        project: './iosApp/iosApp.xcodeproj',
        scheme: 'iosApp',

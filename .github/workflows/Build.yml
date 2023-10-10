@@ -58,6 +58,13 @@ jobs:
       - name: Run Lint
         run: ./gradlew :androidApp:lintDebug
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: "**/build/reports/kover/report.xml"
+
   build-ios:
     name: Build, Test & Check (iOS)
     runs-on: macos-13
@@ -96,31 +103,13 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
-      - name: Build and Test
-        run: |
-          xcodebuild test \
-          -project iosApp/iosApp.xcodeproj \
-          -scheme iosApp \
-          -configuration Debug \
-          -sdk iphoneos \
-          -destination name='iPhone 14 Pro' \
-          build \
-          test
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Build iOS app
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-
-      #      - name: Build iOS app
-      #        env:
-      #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-      #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      #          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
-      #          CI: true
-      #        run: |
-      #          bundle exec fastlane ios build_for_test
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          CI: true
+        run: |
+          bundle exec fastlane ios build_for_test
       #        run: |
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
@@ -130,14 +119,19 @@ jobs:
       #                        -destination name='iPhone 14 Pro' \
       #            build
 
-  #      - name: Run iOS unit tests
-  #        env:
-  #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-  #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-  #          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
-  #          CI: true
-  #        run: |
-  #          bundle exec fastlane ios test_without_building
+      - name: Run iOS unit tests
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          CI: true
+        run: |
+          bundle exec fastlane ios test_without_building
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   #        run: |
   #          xcodebuild clean test \
   #            -project iosApp/iosApp.xcodeproj \
