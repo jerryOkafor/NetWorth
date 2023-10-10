@@ -97,7 +97,8 @@ jobs:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
       - name: Build and Test
-        run: xcodebuild test \
+        run: |
+          xcodebuild test \
           -project iosApp/iosApp.xcodeproj \
           -configuration Debug \
           -scheme iosApp \
