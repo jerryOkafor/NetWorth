@@ -98,9 +98,11 @@ jobs:
 
       - name: Build and Test
         run: xcodebuild test \
-          -project iosApp.xcodeproj \
+          -project iosApp/iosApp.xcodeproj \
+          -configuration Debug \
           -scheme iosApp \
-          -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' \
+          -sdk iphoneos \
+          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.3' \
           build \
           test
 
@@ -120,10 +122,10 @@ jobs:
       #        run: |
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
-      #            -configuration Debug \
-      #            -scheme iosApp \
-      #            -sdk iphoneos \
-      #            -destination name='iPhone 14 Pro' \
+      #                  -configuration Debug \
+      #                  -scheme iosApp \
+      #                  -sdk iphoneos \
+      #                  -destination name='iPhone 14 Pro' \
       #            build
 
   #      - name: Run iOS unit tests
