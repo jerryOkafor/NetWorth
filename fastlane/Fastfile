@@ -7,148 +7,50 @@ before_all do
 end
 
 platform :ios do
-   # iOS Lanes
+    # iOS Lanes
+  desc "Run SwiftLint to check for code style violations"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      output_file: "swiftlint_report.json",
+      ignore_exit_status: true,
+      config_file: ".swiftlint.yml",
+      reporter: "json",
+      quiet: true,
+      strict: true)
+  end
 
-    # Define a packages_path in the root of our repository
-    packages_path = "#{File.expand_path("..", Dir.pwd)}/packages_cache"
-
-   desc 'Fetch certificates and provisioning profiles'
-   lane :certificates do
-     match(app_identifier: 'com.jerryokafor.networth', type: 'development', readonly: true)
-   end
-
-   desc 'Build the iOS application.'
-     private_lane :build do
-        setup_ci(force: true) if ENV['CI']
-
-        match(type: 'adhoc', app_identifier: 'com.jerryokafor.networth', readonly: true)
-        # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
-        gym(
-            project: './iosApp/iosApp.xcodeproj',
-            scheme: 'iosApp',
-            configuration: "Release",
-            export_method: 'ad-hoc',
-            include_bitcode: true,
-            include_symbols: true,
-            export_options: {
-                provisioningProfiles: {
-                  "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
-                }
-              },
-            cloned_source_packages_path: packages_path,
-            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
-            )
-        end
-
-   desc 'Build iOS App'
-     lane :buildApp do
-       build
-      end
-
-   lane :tests do
-     setup_ci(force: true) if ENV['CI']
-     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-     run_tests(
-        project: './iosApp/iosApp.xcodeproj',
-        scheme: 'iosApp',
-        configuration: "Debug",
-        cloned_source_packages_path: packages_path,
-        skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
-        devices: ['iPhone 12 Pro']
-        )
-   end
-
-   desc "Build for test"
-   lane :build_for_test do
-
+  desc "Run tests"
+  lane :test do
     setup_ci(force: true) if ENV['CI']
     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
 
-     run_tests(
-       project: './iosApp/iosApp.xcodeproj',
-       scheme: 'iosApp',
-       configuration: "Debug",
-       devices: ['iPhone 14 Pro'],
-       derived_data_path: "dist",
-       build_for_testing: true
-     )
-   end
-
-   desc "Run specific Tests without building"
-   lane :test_without_building do |options|
-
-     setup_ci(force: true) if ENV['CI']
-     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-
-     run_tests(
-       project: './iosApp/iosApp.xcodeproj',
-       scheme: 'iosApp',
-       configuration: "Debug",
-       derived_data_path: "dist",
-       test_without_building: true
-     )
-   end
-
-   lane :ui_tests do
-    setup_ci(force: true) if ENV['CI']
-    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-
-    UI.important(
-      'example: ' \
-      'split the tests into 4 batches and run each batch of tests in ' \
-      'parallel up to 3 times if tests fail. Abort the testing early ' \
-      'if there are too many failing tests by passing in a ' \
-      ':testrun_completed_block that is called by :multi_scan ' \
-      'after each run of tests.'
-    )
-    test_run_block = lambda do |testrun_info|
-      failed_test_count = testrun_info[:failed].size
-      passed_test_count = testrun_info[:passing].size
-      try_attempt = testrun_info[:try_count]
-      batch = testrun_info[:batch]
-
-      # UI.abort_with_message!('You could conditionally abort')
-      UI.message("\ὠA everything is fine, let's continue try #{try_attempt + 1} for batch #{batch}")
-      {
-        continue: true,
-        only_testing: ['AtomicBoyUITests/AtomicBoyUITests/testExample17']
-      }
-    end
-
-    sim_callback = lambda do |simulator_device_udid|
-      puts "Start streaming system log for device #{simulator_device_udid}"
-    end
-
-    override_scan_options_callback = lambda do |options|
-      options.delete(:xctestrun) unless FastlaneCore::Helper.xcode_at_least?(10)
-    end
-
-    multi_scan(
-      project: File.absolute_path('../iosApp/iosApp.xcodeproj'),
+    scan(
+      project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
-      device: 'iPhone 14 Pro',
-      try_count: 3,
-      batch_count: 4,
-      fail_build: false,
-      parallel_testrun_count: 4,
-      testrun_completed_block: test_run_block,
-      simulator_started_callback: sim_callback,
-      override_scan_options_block: override_scan_options_callback
-    )
+      configuration: "Debug")
+    end
 
-   end
-
+  desc "Build the app"
+  lane :build do
+    setup_ci(force: true) if ENV['CI']
+    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+    gym(
+      project: './iosApp/iosApp.xcodeproj',
+      scheme: 'iosApp',
+      configuration: "Release",
+      export_method: 'development')
+    end
 end
+
 
 platform :android do
   # Android Lanes
   lane :beta do
-
-  gradle(task: ':android:clean')
-  
-  gradle(
-    task: ':android:assemble',
-    build_type: 'Release'
-    )
+    gradle(task: ':android:clean')
+      gradle(
+        task: ':android:assemble',
+        build_type: 'Release'
+      )
     end
 end

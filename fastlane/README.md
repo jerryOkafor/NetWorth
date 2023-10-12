@@ -15,53 +15,29 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios certificates
+### ios lint
 
 ```sh
-[bundle exec] fastlane ios certificates
+[bundle exec] fastlane ios lint
 ```
 
-Fetch certificates and provisioning profiles
+Run SwiftLint to check for code style violations
 
-### ios buildApp
+### ios test
 
 ```sh
-[bundle exec] fastlane ios buildApp
+[bundle exec] fastlane ios test
 ```
 
-Build iOS App
+Run tests
 
-### ios tests
+### ios build
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios build
 ```
 
-
-
-### ios build_for_test
-
-```sh
-[bundle exec] fastlane ios build_for_test
-```
-
-Build for test
-
-### ios test_without_building
-
-```sh
-[bundle exec] fastlane ios test_without_building
-```
-
-Run specific Tests without building
-
-### ios ui_tests
-
-```sh
-[bundle exec] fastlane ios ui_tests
-```
-
-
+Build the app
 
 ----
 

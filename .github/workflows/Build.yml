@@ -143,20 +143,25 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
+      - name: Lint Swift
+        run: |
+          bundle exec fastlane ios lint
+
       - name: Build iOS app
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-          xcodebuild \
-            -project iosApp/iosApp.xcodeproj \
-            -configuration Debug \
-            -scheme iosApp \
-            -sdk iphoneos \
-            -destination name='iPhone 14 Pro' \
-            build
-        # bundle exec fastlane ios ui_tests
+          bundle exec fastlane ios build
+#          xcodebuild \
+#            -project iosApp/iosApp.xcodeproj \
+#            -configuration Debug \
+#            -scheme iosApp \
+#            -sdk iphoneos \
+#            -destination name='iPhone 14 Pro' \
+#            build
+
 
       - name: Run iOS unit tests
         env:
@@ -164,15 +169,15 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-          xcodebuild clean test \
-            -project iosApp/iosApp.xcodeproj \
-            -configuration Debug \
-            -scheme iosApp \
-            -sdk iphoneos \
-            -destination name='iPhone 14 Pro' \
-            -test-timeouts-enabled YES \
-            build
-        # bundle exec fastlane ios test_without_building
+          bundle exec fastlane ios test
+#          xcodebuild clean test \
+#            -project iosApp/iosApp.xcodeproj \
+#            -configuration Debug \
+#            -scheme iosApp \
+#            -sdk iphoneos \
+#            -destination name='iPhone 14 Pro' \
+#            -test-timeouts-enabled YES \
+#            build
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
