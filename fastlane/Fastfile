@@ -38,7 +38,7 @@ platform :ios do
     gym(
       project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
-      configuration: "Release",
+      configuration: "Debug",
       export_method: 'development',
       export_options: {
           provisioningProfiles: {
