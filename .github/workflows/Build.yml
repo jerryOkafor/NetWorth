@@ -149,14 +149,14 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-#          bundle exec fastlane ios ui_tests
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
-                  -configuration Debug \
-                  -scheme iosApp \
-                        -sdk iphoneos \
-                        -destination name='iPhone 14 Pro' \
+            -configuration Debug \
+            -scheme iosApp \
+            -sdk iphoneos \
+            -destination name='iPhone 14 Pro' \
             build
+        # bundle exec fastlane ios ui_tests
 
       - name: Run iOS unit tests
         env:
@@ -164,7 +164,6 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-#          bundle exec fastlane ios test_without_building
           xcodebuild clean test \
             -project iosApp/iosApp.xcodeproj \
             -configuration Debug \
@@ -173,6 +172,7 @@ jobs:
             -destination name='iPhone 14 Pro' \
             -test-timeouts-enabled YES \
             build
+        # bundle exec fastlane ios test_without_building
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
