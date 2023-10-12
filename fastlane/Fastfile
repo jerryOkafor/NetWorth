@@ -28,7 +28,14 @@ platform :ios do
     scan(
       project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
-      configuration: "Debug")
+      configuration: "Debug",
+      export_method: 'development',
+      export_options: {
+          provisioningProfiles: {
+            "com.jerryokafor.networth" => "match Development com.jerryokafor.networth",
+          }
+        }
+      )
     end
 
   desc "Build the app"
