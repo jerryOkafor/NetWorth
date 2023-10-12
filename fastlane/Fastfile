@@ -39,7 +39,13 @@ platform :ios do
       project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
       configuration: "Release",
-      export_method: 'development')
+      export_method: 'development',
+      export_options: {
+          provisioningProfiles: {
+            "com.jerryokafor.networth" => "match Development com.jerryokafor.networth",
+          }
+        }
+      )
     end
 end
 
