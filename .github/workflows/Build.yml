@@ -4,7 +4,14 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "docs/**"
+      - "doc/**"
+
   pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "doc/**"
 
 concurrency:
   group: build-${{ github.ref }}
@@ -29,7 +36,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.9.0
 
       - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.konan/caches
@@ -61,7 +68,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.9.0
 
       - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.konan/caches
@@ -106,7 +113,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.9.0
 
       - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.konan/caches
@@ -142,38 +149,35 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           CI: true
         run: |
-          bundle exec fastlane ios ui_tests
-      #        run: |
-      #          xcodebuild \
-      #            -project iosApp/iosApp.xcodeproj \
-      #                  -configuration Debug \
-      #                  -scheme iosApp \
-      #                        -sdk iphoneos \
-      #                        -destination name='iPhone 14 Pro' \
-      #            build
+#          bundle exec fastlane ios ui_tests
+          xcodebuild \
+            -project iosApp/iosApp.xcodeproj \
+                  -configuration Debug \
+                  -scheme iosApp \
+                        -sdk iphoneos \
+                        -destination name='iPhone 14 Pro' \
+            build
 
-      #      - name: Run iOS unit tests
-      #        env:
-      #          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-      #          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      #          CI: true
-      #        run: |
-      #          bundle exec fastlane ios test_without_building
+      - name: Run iOS unit tests
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          CI: true
+        run: |
+#          bundle exec fastlane ios test_without_building
+          xcodebuild clean test \
+            -project iosApp/iosApp.xcodeproj \
+            -configuration Debug \
+            -scheme iosApp \
+            -sdk iphoneos \
+            -destination name='iPhone 14 Pro' \
+            -test-timeouts-enabled YES \
+            build
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-  #        run: |
-  #          xcodebuild clean test \
-  #            -project iosApp/iosApp.xcodeproj \
-  #            -configuration Debug \
-  #            -scheme iosApp \
-  #            -sdk iphoneos \
-  #            -destination name='iPhone 14 Pro' \
-  #            -test-timeouts-enabled YES \
-  #            build
 
   coverage-report:
     name: Code coverage report & verification
@@ -194,7 +198,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.9.0
 
       - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.konan/caches
