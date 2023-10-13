@@ -100,7 +100,7 @@ jobs:
 
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-12
+    runs-on: macos-13
     needs: [ code-quality ]
 
     steps:
@@ -116,7 +116,29 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
 
-      - name: Setup Kotlin/Native compile(Konan) Cache
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Setup Fastlane
+        run: |
+          cd ./iosApp
+          bundle install
+
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Decrypt large secret
+        run: |
+          ./.github/scripts/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      - name: Cache Kotlin/Native compile(Konan) Cache
         if: always()
         uses: actions/cache@v3
         with:
@@ -128,25 +150,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-konan-
 
-#      - name: Setup XCode
-#        uses: maxim-lobanov/setup-xcode@v1
-#        with:
-#          xcode-version: latest-stable
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Cache iOS packages
+        if: always()
+        uses: actions/cache@v3
+        id: packages-cache
         with:
-          ruby-version: '3.0'
-          bundler-cache: true
+          path: packages_cache
+          key: ${{ runner.os }}-packages-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-
 
-      - name: Setup Fastlane
-        run: bundle install
-
-      - name: Decrypt large secret
-        run: |
-          ./.github/scripts/decrypt_secret.sh
-        env:
-          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+      #      - name: Setup XCode
+      #        uses: maxim-lobanov/setup-xcode@v1
+      #        with:
+      #          xcode-version: latest-stable
 
       - name: Lint Swift
         run: |
