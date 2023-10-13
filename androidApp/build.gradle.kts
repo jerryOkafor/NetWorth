@@ -1,8 +1,15 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.application")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.org.jetbrains.kotlinx.kover)
+}
+
+compose {
+    kotlinCompilerPlugin.set(libs.versions.composeMultiplatformCompiler.get().toString())
+    kotlinCompilerPluginArgs.add(
+        "suppressKotlinVersionCompatibilityCheck=${libs.versions.composeMultiplatformCompiler.get()}",
+    )
 }
 
 kotlin {
@@ -35,6 +42,10 @@ android {
 
     lint {
         baseline = file("lint-baseline.xml")
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeMultiplatformCompiler.get()
     }
 
     compileOptions {

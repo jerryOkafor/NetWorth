@@ -21,6 +21,8 @@ jobs:
   code-quality:
     name: Verify Code Quality
     runs-on: ubuntu-latest
+#    env:
+#      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -96,7 +98,7 @@ jobs:
 
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-13
+    runs-on: macos-latest
     needs: [ code-quality ]
 
     steps:
@@ -186,7 +188,7 @@ jobs:
 
   coverage-report:
     name: Code coverage report & verification
-    runs-on: macos-12
+    runs-on: macos-latest
     needs: [ build-android, build-ios ]
 
     steps:
@@ -244,3 +246,12 @@ jobs:
 #          api-level: 29
 #          target: google_apis
 #          script: ./gradlew androidApp:connectedAndroidTest
+
+
+#      - name: Push new screenshots if available
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        if: steps.screenshotsrecord.outcome == 'success'
+#        with:
+#          file_pattern: '*/*.png'
+#          disable_globbing: true
+#          commit_message: "🤖 Updates screenshots"

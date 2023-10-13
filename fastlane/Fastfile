@@ -38,14 +38,19 @@ platform :ios do
 
   desc "Run tests"
   lane :test do
+    ENV['FASTLANE_XCODE_LIST_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '20'
+    ENV['FASTLANE_EXPLICIT_OPEN_SIMULATOR'] = '1'
     setup_ci(force: true) if ENV['CI']
     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
 
     scan(
       project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
+      clean: false,
       configuration: "Debug",
-      device: 'iPhone 12 Pro'
+      device: 'iPhone 15 Pro'
       )
     end
 end

@@ -23,14 +23,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Run SwiftLint to check for code style violations
 
-### ios test
-
-```sh
-[bundle exec] fastlane ios test
-```
-
-Run tests
-
 ### ios build
 
 ```sh
@@ -38,6 +30,14 @@ Run tests
 ```
 
 Build the app
+
+### ios test
+
+```sh
+[bundle exec] fastlane ios test
+```
+
+Run tests
 
 ----
 
