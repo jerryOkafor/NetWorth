@@ -137,10 +137,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Pre start emulator
-        run: |
-          xcrun instruments -w "iPhone 12 Pro (16.2) [" || true
-
       - name: Decrypt large secret
         run: |
           ./.github/scripts/decrypt_secret.sh
