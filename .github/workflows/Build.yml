@@ -21,8 +21,8 @@ jobs:
   code-quality:
     name: Verify Code Quality
     runs-on: ubuntu-latest
-#    env:
-#      KONAN_DATA_DIR: ~/.gradle/caches/.konan
+    #    env:
+    #      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -39,6 +39,7 @@ jobs:
 
       - name: Setup Kotlin/Native compile(Konan) Cache
         uses: actions/cache@v3
+        if: always()
         with:
           path: |
             ~/.konan/caches
@@ -71,6 +72,7 @@ jobs:
 
       - name: Setup Kotlin/Native compile(Konan) Cache
         uses: actions/cache@v3
+        if: always()
         with:
           path: |
             ~/.konan/caches
@@ -116,6 +118,7 @@ jobs:
 
       - name: Setup Kotlin/Native compile(Konan) Cache
         uses: actions/cache@v3
+        if: always()
         with:
           path: |
             ~/.konan/caches
@@ -156,13 +159,13 @@ jobs:
           CI: true
         run: |
           bundle exec fastlane ios build
-#          xcodebuild \
-#            -project iosApp/iosApp.xcodeproj \
-#            -configuration Debug \
-#            -scheme iosApp \
-#            -sdk iphoneos \
-#            -destination name='iPhone 14 Pro' \
-#            build
+      #          xcodebuild \
+      #            -project iosApp/iosApp.xcodeproj \
+      #            -configuration Debug \
+      #            -scheme iosApp \
+      #            -sdk iphoneos \
+      #            -destination name='iPhone 14 Pro' \
+      #            build
 
 
       - name: Run iOS unit tests
@@ -172,14 +175,14 @@ jobs:
           CI: true
         run: |
           bundle exec fastlane ios test
-#          xcodebuild clean test \
-#            -project iosApp/iosApp.xcodeproj \
-#            -configuration Debug \
-#            -scheme iosApp \
-#            -sdk iphoneos \
-#            -destination name='iPhone 14 Pro' \
-#            -test-timeouts-enabled YES \
-#            build
+      #          xcodebuild clean test \
+      #            -project iosApp/iosApp.xcodeproj \
+      #            -configuration Debug \
+      #            -scheme iosApp \
+      #            -sdk iphoneos \
+      #            -destination name='iPhone 14 Pro' \
+      #            -test-timeouts-enabled YES \
+      #            build
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
@@ -206,6 +209,7 @@ jobs:
 
       - name: Setup Kotlin/Native compile(Konan) Cache
         uses: actions/cache@v3
+        if: always()
         with:
           path: |
             ~/.konan/caches
