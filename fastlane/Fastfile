@@ -67,7 +67,6 @@ platform :ios do
     end
 end
 
-
 platform :android do
   # Android Lanes
   lane :beta do
