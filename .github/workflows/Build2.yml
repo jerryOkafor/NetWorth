@@ -14,7 +14,7 @@ on:
       - "doc/**"
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-2-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
