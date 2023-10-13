@@ -21,8 +21,8 @@ jobs:
   code-quality:
     name: Verify Code Quality
     runs-on: ubuntu-latest
-    #    env:
-    #      KONAN_DATA_DIR: ~/.gradle/caches/.konan
+    env:
+      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -36,18 +36,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
-
-      - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v3
-        if: always()
-        with:
-          path: |
-            ~/.konan/caches
-            ~/.konan/dependencies
-            ~/.konan/kotlin-native-prebuilt-macos-*
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-konan-
 
       - name: Code Quality
         run: ./gradlew detekt ktlintCheck
@@ -56,6 +44,8 @@ jobs:
     name: Build, Test & Check (Android)
     runs-on: ubuntu-latest
     needs: [ code-quality ]
+    env:
+      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -69,18 +59,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
-
-      - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v3
-        if: always()
-        with:
-          path: |
-            ~/.konan/caches
-            ~/.konan/dependencies
-            ~/.konan/kotlin-native-prebuilt-macos-*
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-konan-
 
       - name: Build android app
         run: ./gradlew assembleDebug
@@ -102,6 +80,8 @@ jobs:
     name: Build, Test & Check (iOS)
     runs-on: macos-13
     needs: [ code-quality ]
+    env:
+      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -115,18 +95,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
-
-      - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v3
-        if: always()
-        with:
-          path: |
-            ~/.konan/caches
-            ~/.konan/dependencies
-            ~/.konan/kotlin-native-prebuilt-macos-*
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-konan-
 
       - name: Setup XCode
         uses: maxim-lobanov/setup-xcode@v1
@@ -193,6 +161,8 @@ jobs:
     name: Code coverage report & verification
     runs-on: macos-13
     needs: [ build-android, build-ios ]
+    env:
+      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -206,18 +176,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
-
-      - name: Setup Kotlin/Native compile(Konan) Cache
-        uses: actions/cache@v3
-        if: always()
-        with:
-          path: |
-            ~/.konan/caches
-            ~/.konan/dependencies
-            ~/.konan/kotlin-native-prebuilt-macos-*
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-konan-
 
       - name: Run all tests
         run: ./gradlew allTests
