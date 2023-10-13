@@ -36,6 +36,7 @@ platform :ios do
       clean: true,
       sdk: 'iphoneos',
       device: 'iPhone 12 Pro',
+      prelaunch_simulator: true,
       build_for_testing: true,
       derived_data_path: "fastlane/iosBuild/data"
       )
