@@ -50,7 +50,7 @@ platform :ios do
       scheme: 'iosApp',
       clean: false,
       configuration: "Debug",
-      device: 'iPhone 15 Pro'
+      device: 'iPhone 14 Pro'
       )
     end
 end

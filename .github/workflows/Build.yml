@@ -188,7 +188,7 @@ jobs:
 
   coverage-report:
     name: Code coverage report & verification
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: [ build-android, build-ios ]
 
     steps:

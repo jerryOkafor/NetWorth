@@ -7,9 +7,6 @@ plugins {
 
 compose {
     kotlinCompilerPlugin.set(libs.versions.composeMultiplatformCompiler.get().toString())
-    kotlinCompilerPluginArgs.add(
-        "suppressKotlinVersionCompatibilityCheck=${libs.versions.composeMultiplatformCompiler.get()}",
-    )
 }
 
 kotlin {
