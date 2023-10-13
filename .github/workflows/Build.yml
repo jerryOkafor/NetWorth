@@ -100,7 +100,7 @@ jobs:
 
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-13
+    runs-on: macos-12
     needs: [ code-quality ]
 
     steps:
@@ -191,7 +191,7 @@ jobs:
 
   coverage-report:
     name: Code coverage report & verification
-    runs-on: macos-13
+    runs-on: macos-12
     needs: [ build-android, build-ios ]
 
     steps:
@@ -233,7 +233,7 @@ jobs:
           files: "**/build/reports/kover/report.xml"
 
 #  androidTest:
-#    runs-on: macos-latest
+#    runs-on: macos-12
 #    steps:
 #      - name: Checkout
 #        uses: actions/checkout@v4
