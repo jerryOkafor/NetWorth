@@ -90,10 +90,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
 
-      - name: Setup XCode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
+#      - name: Setup XCode
+#        uses: maxim-lobanov/setup-xcode@v1
+#        with:
+#          xcode-version: latest-stable
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

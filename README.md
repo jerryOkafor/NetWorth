@@ -266,8 +266,9 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 [][KMMBridge Quick Start - CocoaPods](https://touchlab.co/kmmbridge-quick-start-cocoapods)
 [][Test_center plugin](https://github.com/lyndsey-ferguson/fastlane-plugin-test_center)
 [][How to write UI testing?](https://medium.com/@bingkuo/how-to-write-ui-testing-98c9e0a39d45)
+[][Mastering Fastlane](https://medium.com/@muhammedqazi/mastering-fastlane-the-ultimate-guide-to-effortless-android-and-ios-deployments-with-github-e0878c3f9529)
 
 
-# Known Issus
+# Known Issues
 [Kotlin Multiplatform build times](https://github.com/gradle/gradle-build-action/issues/125)
 [Tips for improving Kotlin/Native compilation times](https://kotlinlang.org/docs/native-improving-compilation-time.html#general-recommendations)

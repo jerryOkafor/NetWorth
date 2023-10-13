@@ -7,7 +7,8 @@ before_all do
 end
 
 platform :ios do
-    # iOS Lanes
+  # iOS Lanes
+
   desc "Run SwiftLint to check for code style violations"
   lane :lint do
     swiftlint(
@@ -22,6 +23,10 @@ platform :ios do
 
   desc "Build the app"
   lane :build do
+    ENV['FASTLANE_XCODE_LIST_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '20'
+    ENV['FASTLANE_EXPLICIT_OPEN_SIMULATOR'] = '1'
     setup_ci(force: true) if ENV['CI']
     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
     scan(
