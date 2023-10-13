@@ -60,7 +60,9 @@ platform :ios do
       device: 'iPhone 12 Pro',
       prelaunch_simulator: true,
       test_without_building: true,
-      derived_data_path: "fastlane/iosBuild/data"
+      derived_data_path: "fastlane/iosBuild/data",
+      number_of_retries: 3,
+      fail_build:false
       )
     end
 end

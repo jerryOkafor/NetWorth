@@ -143,7 +143,7 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
-      - name: Cache Kotlin/Native compile(Konan) Cache
+      - name: Setup Kotlin/Native compile(Konan) Cache
         if: always()
         uses: actions/cache@v3
         with:
