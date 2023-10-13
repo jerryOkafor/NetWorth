@@ -18,3 +18,4 @@ dist/
 *.dSYM.*
 /fastlane/test_output/
 /fastlane/report.xml
+/fastlane/iosBuild/

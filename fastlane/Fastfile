@@ -19,20 +19,20 @@ platform :ios do
       quiet: true,
       strict: true)
   end
+
   desc "Build the app"
   lane :build do
     setup_ci(force: true) if ENV['CI']
     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-    gym(
+    scan(
       project: './iosApp/iosApp.xcodeproj',
       scheme: 'iosApp',
       configuration: "Debug",
-      export_method: 'development',
-      export_options: {
-          provisioningProfiles: {
-            "com.jerryokafor.networth" => "match Development com.jerryokafor.networth",
-          }
-        }
+      clean: true,
+      sdk: 'iphoneos',
+      device: 'iPhone 12 Pro',
+      build_for_testing: true,
+      derived_data_path: "fastlane/iosBuild/data"
       )
     end
 
@@ -50,7 +50,12 @@ platform :ios do
       scheme: 'iosApp',
       clean: false,
       configuration: "Debug",
-      device: 'iPhone 12 Pro'
+      sdk: 'iphoneos',
+      code_coverage: true,
+      device: 'iPhone 12 Pro',
+      prelaunch_simulator: true,
+      test_without_building: true,
+      derived_data_path: "fastlane/iosBuild/data"
       )
     end
 end
