@@ -4,4 +4,4 @@ interface Platform {
     val name: String
 }
 
-expect fun getPlatform(): Platform
+expect class DefaultPlatform() : Platform

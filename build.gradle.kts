@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.compose).apply(false)
     alias(libs.plugins.io.gitlab.arturbosch.detekt).apply(false)
     alias(libs.plugins.org.jetbrains.kotlinx.kover).apply(false)
+    alias(libs.plugins.io.kotest.multiplatform).apply(false)
 
     id("com.jerryokafor.networth.detekt")
     id("com.jerryokafor.networth.ktlint")

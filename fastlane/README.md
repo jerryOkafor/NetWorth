@@ -44,10 +44,26 @@ Run tests
 
 ## Android
 
-### android beta
+### android build
 
 ```sh
-[bundle exec] fastlane android beta
+[bundle exec] fastlane android build
+```
+
+
+
+### android test
+
+```sh
+[bundle exec] fastlane android test
+```
+
+
+
+### android androidTest
+
+```sh
+[bundle exec] fastlane android androidTest
 ```
 
 

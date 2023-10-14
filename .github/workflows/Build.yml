@@ -83,13 +83,26 @@ jobs:
             ${{ runner.os }}-konan-
 
       - name: Build android app
-        run: ./gradlew assembleDebug
-
-      - name: Run Android Unit Tests
-        run: ./gradlew :androidApp:testDebugUnitTest
+        run: |
+          bundle exec fastlane android build
 
       - name: Run Lint
         run: ./gradlew :androidApp:lintDebug
+
+      - name: Run Android Unit Tests
+        run: |
+          bundle exec fastlane android test
+
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          disable-animations: true
+          disk-size: 6000M
+          heap-size: 600M
+          script: |
+            bundle exec fastlane android androidTests
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
@@ -249,24 +262,57 @@ jobs:
         with:
           files: "**/build/reports/kover/report.xml"
 
-#  androidTest:
-#    runs-on: macos-12
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up JDK 17
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'zulu'
-#          java-version: 17
-#
-#      - name: Android Instrumentation Tests
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 29
-#          target: google_apis
-#          script: ./gradlew androidApp:connectedAndroidTest
+  androidTest:
+    name: Run Android UI Test
+    runs-on: macos-12
+    needs: [ build-android, build-ios ]
+    timeout-minutes: 55
+    strategy:
+      matrix:
+        api-level: [ 26, 30 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.9.0
+
+      - name: Setup Kotlin/Native compile(Konan) Cache
+        if: always()
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan/caches
+            ~/.konan/dependencies
+            ~/.konan/kotlin-native-prebuilt-macos-*
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
+
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          disable-animations: true
+          disk-size: 6000M
+          heap-size: 600M
+          script: |
+            bundle exec fastlane android androidTests
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: "**/build/reports/kover/report.xml"
 
 
 #      - name: Push new screenshots if available
