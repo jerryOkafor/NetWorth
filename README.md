@@ -262,3 +262,13 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 [A Better Way to Use Gradle With Github Actions](https://blog.gradle.org/gh-actions)
 [Executing Gradle builds on GitHub Actions](https://docs.gradle.org/current/userguide/github-actions.html)
 [Effective Swift Package Manager caching with Fastlane and Github Actions](https://itnext.io/effective-swift-package-manager-caching-with-fastlane-and-github-actions-b241585f0a4c)
+[][https://circleci.com/blog/how-lightspeed-optimized-ios-testing/](https://circleci.com/blog/how-lightspeed-optimized-ios-testing/)
+[][KMMBridge Quick Start - CocoaPods](https://touchlab.co/kmmbridge-quick-start-cocoapods)
+[][Test_center plugin](https://github.com/lyndsey-ferguson/fastlane-plugin-test_center)
+[][How to write UI testing?](https://medium.com/@bingkuo/how-to-write-ui-testing-98c9e0a39d45)
+[][Mastering Fastlane](https://medium.com/@muhammedqazi/mastering-fastlane-the-ultimate-guide-to-effortless-android-and-ios-deployments-with-github-e0878c3f9529)
+
+
+# Known Issues
+[Kotlin Multiplatform build times](https://github.com/gradle/gradle-build-action/issues/125)
+[Tips for improving Kotlin/Native compilation times](https://kotlinlang.org/docs/native-improving-compilation-time.html#general-recommendations)

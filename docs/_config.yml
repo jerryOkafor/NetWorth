@@ -1,0 +1,12 @@
+title: Neworth
+description: A KMP (Android & iOS) playground project.
+theme: just-the-docs
+
+url: https://just-the-docs.github.io
+
+aux_links:
+  Github: https://github.com/jerryOkafor/NetWorth
+
+
+# Color scheme supports "light" (default) and "dark"
+color_scheme: dark

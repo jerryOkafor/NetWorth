@@ -4,7 +4,14 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "docs/**"
+      - "doc/**"
+
   pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "doc/**"
 
 concurrency:
   group: build-${{ github.ref }}
@@ -14,6 +21,8 @@ jobs:
   code-quality:
     name: Verify Code Quality
     runs-on: ubuntu-latest
+    #    env:
+    #      KONAN_DATA_DIR: ~/.gradle/caches/.konan
 
     steps:
       - name: Checkout
@@ -27,6 +36,18 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
+
+      - name: Setup Kotlin/Native compile(Konan) Cache
+        if: always()
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan/caches
+            ~/.konan/dependencies
+            ~/.konan/kotlin-native-prebuilt-macos-*
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
 
       - name: Code Quality
         run: ./gradlew detekt ktlintCheck
@@ -49,6 +70,18 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
 
+      - name: Setup Kotlin/Native compile(Konan) Cache
+        if: always()
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan/caches
+            ~/.konan/dependencies
+            ~/.konan/kotlin-native-prebuilt-macos-*
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
+
       - name: Build android app
         run: ./gradlew assembleDebug
 
@@ -58,9 +91,16 @@ jobs:
       - name: Run Lint
         run: ./gradlew :androidApp:lintDebug
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: "**/build/reports/kover/report.xml"
+
   build-ios:
     name: Build, Test & Check (iOS)
-    runs-on: macos-13
+    runs-on: macos-12
     needs: [ code-quality ]
 
     steps:
@@ -76,11 +116,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
 
-      - name: Setup XCode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -88,7 +123,19 @@ jobs:
           bundler-cache: true
 
       - name: Setup Fastlane
-        run: bundle install
+        run: |
+          cd ./iosApp
+          bundle install
+
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: Decrypt large secret
         run: |
@@ -96,7 +143,20 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
+      - name: Setup Kotlin/Native compile(Konan) Cache
+        if: always()
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan/caches
+            ~/.konan/dependencies
+            ~/.konan/kotlin-native-prebuilt-macos-*
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
+
       - name: Cache iOS packages
+        if: always()
         uses: actions/cache@v3
         id: packages-cache
         with:
@@ -105,15 +165,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-packages-
 
+      - name: Lint Swift
+        run: |
+          bundle exec fastlane ios lint
+
       - name: Build iOS app
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
           CI: true
         run: |
-          bundle exec fastlane ios buildApp
-      #        run: |
+          bundle exec fastlane ios build
       #          xcodebuild \
       #            -project iosApp/iosApp.xcodeproj \
       #            -configuration Debug \
@@ -122,23 +184,27 @@ jobs:
       #            -destination name='iPhone 14 Pro' \
       #            build
 
+
       - name: Run iOS unit tests
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
           CI: true
         run: |
-          bundle exec fastlane ios tests
-  #        run: |
-  #          xcodebuild clean test \
-  #            -project iosApp/iosApp.xcodeproj \
-  #            -configuration Debug \
-  #            -scheme iosApp \
-  #            -sdk iphoneos \
-  #            -destination name='iPhone 14 Pro' \
-  #            -test-timeouts-enabled YES \
-  #            build
+          bundle exec fastlane ios test
+      #          xcodebuild clean test \
+      #            -project iosApp/iosApp.xcodeproj \
+      #            -configuration Debug \
+      #            -scheme iosApp \
+      #            -sdk iphoneos \
+      #            -destination name='iPhone 14 Pro' \
+      #            -test-timeouts-enabled YES \
+      #            build
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   coverage-report:
     name: Code coverage report & verification
@@ -158,6 +224,18 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.9.0
 
+      - name: Setup Kotlin/Native compile(Konan) Cache
+        if: always()
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan/caches
+            ~/.konan/dependencies
+            ~/.konan/kotlin-native-prebuilt-macos-*
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/Dependencies.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
+
       - name: Run all tests
         run: ./gradlew allTests
 
@@ -172,7 +250,7 @@ jobs:
           files: "**/build/reports/kover/report.xml"
 
 #  androidTest:
-#    runs-on: macos-latest
+#    runs-on: macos-12
 #    steps:
 #      - name: Checkout
 #        uses: actions/checkout@v4
@@ -189,3 +267,12 @@ jobs:
 #          api-level: 29
 #          target: google_apis
 #          script: ./gradlew androidApp:connectedAndroidTest
+
+
+#      - name: Push new screenshots if available
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        if: steps.screenshotsrecord.outcome == 'success'
+#        with:
+#          file_pattern: '*/*.png'
+#          disable_globbing: true
+#          commit_message: "🤖 Updates screenshots"

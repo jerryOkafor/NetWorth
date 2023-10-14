@@ -7,66 +7,73 @@ before_all do
 end
 
 platform :ios do
-   # iOS Lanes
+  # iOS Lanes
 
-    # Define a packages_path in the root of our repository
-    packages_path = "#{File.expand_path("..", Dir.pwd)}/packages_cache"
+  desc "Run SwiftLint to check for code style violations"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      output_file: "swiftlint_report.json",
+      ignore_exit_status: true,
+      config_file: ".swiftlint.yml",
+      reporter: "json",
+      quiet: true,
+      strict: true)
+  end
 
-   desc 'Fetch certificates and provisioning profiles'
-   lane :certificates do
-     match(app_identifier: 'com.jerryokafor.networth', type: 'development', readonly: true)
-   end
+  desc "Build the app"
+  lane :build do
+    ENV['FASTLANE_XCODE_LIST_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '20'
+    ENV['FASTLANE_EXPLICIT_OPEN_SIMULATOR'] = '1'
+    setup_ci(force: true) if ENV['CI']
+    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
+    scan(
+      project: './iosApp/iosApp.xcodeproj',
+      scheme: 'iosApp',
+      configuration: "Debug",
+      clean: true,
+      sdk: 'iphonesimulator',
+      device: 'iPhone 12 Pro',
+      prelaunch_simulator: true,
+      build_for_testing: true,
+      derived_data_path: "fastlane/iosBuild/data"
+      )
+    end
 
-   desc 'Build the iOS application.'
-     private_lane :build do
-        setup_ci(force: true) if ENV['CI']
+  desc "Run tests"
+  lane :test do
+    ENV['FASTLANE_XCODE_LIST_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '300'
+    ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '20'
+    ENV['FASTLANE_EXPLICIT_OPEN_SIMULATOR'] = '1'
+    setup_ci(force: true) if ENV['CI']
+    match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
 
-        match(type: 'adhoc', app_identifier: 'com.jerryokafor.networth', readonly: true)
-        # increment_build_number(xcodeproj: './iosApp/iosApp.xcodeproj')
-        gym(
-            project: './iosApp/iosApp.xcodeproj',
-            scheme: 'iosApp',
-            configuration: "Release",
-            export_method: 'ad-hoc',
-            export_options: {
-                provisioningProfiles: {
-                  "com.jerryokafor.networth" => "match AdHoc com.jerryokafor.networth",
-                }
-              },
-            cloned_source_packages_path: packages_path,
-            skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
-            )
-        end
-
-   desc 'Build iOS App'
-     lane :buildApp do
-       build
-      end
-
-   lane :tests do
-     setup_ci(force: true) if ENV['CI']
-     match(type: 'development', app_identifier: 'com.jerryokafor.networth', readonly: true)
-     run_tests(
-        project: './iosApp/iosApp.xcodeproj',
-        scheme: 'iosApp',
-        configuration: "Debug",
-        cloned_source_packages_path: packages_path,
-        skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
-        devices: ['iPhone 12 Pro']
-        )
-   end
-
+    scan(
+      project: './iosApp/iosApp.xcodeproj',
+      scheme: 'iosApp',
+      clean: false,
+      configuration: "Debug",
+      sdk: 'iphonesimulator',
+      code_coverage: false,
+      device: 'iPhone 12 Pro',
+      prelaunch_simulator: true,
+      test_without_building: true,
+      derived_data_path: "fastlane/iosBuild/data",
+      fail_build:true
+      )
+    end
 end
 
 platform :android do
   # Android Lanes
   lane :beta do
-
-  gradle(task: ':android:clean')
-  
-  gradle(
-    task: ':android:assemble',
-    build_type: 'Release'
-    )
+    gradle(task: ':android:clean')
+      gradle(
+        task: ':android:assemble',
+        build_type: 'Release'
+      )
     end
 end

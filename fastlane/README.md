@@ -15,29 +15,29 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios certificates
+### ios lint
 
 ```sh
-[bundle exec] fastlane ios certificates
+[bundle exec] fastlane ios lint
 ```
 
-Fetch certificates and provisioning profiles
+Run SwiftLint to check for code style violations
 
-### ios buildApp
+### ios build
 
 ```sh
-[bundle exec] fastlane ios buildApp
+[bundle exec] fastlane ios build
 ```
 
-Build iOS App
+Build the app
 
-### ios tests
+### ios test
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios test
 ```
 
-
+Run tests
 
 ----
 

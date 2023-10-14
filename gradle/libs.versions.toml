@@ -1,13 +1,16 @@
 [versions]
-kotlin = "1.9.20-Beta2"
+kotlin = "1.9.20-RC"
+androidGradlePlugin = "8.1.2"
 
 activity-compose = "1.8.0"
 activity-ktx = "1.8.0"
 appcompat = "1.6.1"
 chart = "Beta-0.0.5"
 core-ktx = "1.12.0"
-compose-multiplatform = "1.5.3"
-compose-multiplatform-compiler = "1.5.10-beta02"
+composeMultiplatform = "1.5.3"
+#https://github.com/JetBrains/compose-multiplatform/blob/master/gradle-plugins/compose/src/main/kotlin/org/jetbrains/compose/ComposeCompilerCompatibility.kt#L7
+composeMultiplatformCompiler = "1.5.2.1-rc01"
+composeAndroid = "1.5.3"
 koalaplot-core = "0.4.0-dev2"
 
 
@@ -20,13 +23,13 @@ material3 = "1.1.2"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-ktx" }
-androidx-foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "compose-multiplatform" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-foundation-layout-android = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "compose-multiplatform" }
-ui-tooling-preview-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "compose-multiplatform" }
+androidx-foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "composeAndroid" }
+foundation-layout-android = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "composeAndroid" }
+ui-tooling-preview-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "composeAndroid" }
 
 chart = { module = "io.github.thechance101:chart", version.ref = "chart" }
 koalaplot-core = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot-core" }
@@ -36,8 +39,13 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 
 [plugins]
-org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform-compiler" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+org-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+org-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 org-jetbrains-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+com-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+com-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 [bundles]

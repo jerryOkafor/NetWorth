@@ -1,8 +1,12 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
+    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.org.jetbrains.kotlinx.kover)
+}
+
+compose {
+    kotlinCompilerPlugin.set(libs.versions.composeMultiplatformCompiler.get().toString())
 }
 
 kotlin {
@@ -72,6 +76,11 @@ android {
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeMultiplatformCompiler.get()
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
