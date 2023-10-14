@@ -69,11 +69,19 @@ end
 
 platform :android do
   # Android Lanes
-  lane :beta do
-    gradle(task: ':android:clean')
+  lane :build do
+    gradle(task: ':androidApp:clean')
       gradle(
-        task: ':android:assemble',
-        build_type: 'Release'
+        task: ':androidApp:assemble',
+        build_type: 'Debug'
       )
+    end
+
+  lane :test do
+      gradle(task: ':androidApp:testDebugUnitTest')
+    end
+
+  lane :androidTest do
+      gradle(task: ':androidApp:connectedCheck')
     end
 end

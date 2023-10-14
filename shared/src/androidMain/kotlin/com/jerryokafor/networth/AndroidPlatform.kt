@@ -1,7 +1,6 @@
 package com.jerryokafor.networth
 
-class AndroidPlatform : Platform {
-    override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"
+actual class DefaultPlatform actual constructor() : Platform {
+    override val name: String
+        get() = "Android ${android.os.Build.VERSION.SDK_INT}"
 }
-
-actual fun getPlatform(): Platform = AndroidPlatform()

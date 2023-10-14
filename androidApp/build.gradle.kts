@@ -35,6 +35,8 @@ android {
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     lint {
@@ -55,6 +57,13 @@ android {
 }
 dependencies {
     implementation(libs.androidx.foundation.android)
+
+    testImplementation(libs.junit)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.uiautomator.v18)
 }
 
 koverReport {

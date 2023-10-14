@@ -1,8 +1,11 @@
+import org.jetbrains.compose.compose
+
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.compose)
     alias(libs.plugins.org.jetbrains.kotlinx.kover)
+    alias(libs.plugins.io.kotest.multiplatform)
 }
 
 compose {
@@ -36,6 +39,23 @@ kotlin {
                 // Chart
                 implementation(libs.chart)
                 implementation(libs.koalaplot.core)
+            }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation(libs.kotlinx.coroutines.test)
+
+                // kotest
+                implementation(libs.kotest.framework.engine)
+                implementation(libs.kotest.assertions.core)
+                implementation(libs.kotest.property)
+
+                // Compose
+//                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
             }
         }
 

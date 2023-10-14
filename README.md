@@ -267,6 +267,7 @@ gpg --symmetric --cipher-algo AES256 iosApp/Configuration/Config.xcconfig
 [][Test_center plugin](https://github.com/lyndsey-ferguson/fastlane-plugin-test_center)
 [][How to write UI testing?](https://medium.com/@bingkuo/how-to-write-ui-testing-98c9e0a39d45)
 [][Mastering Fastlane](https://medium.com/@muhammedqazi/mastering-fastlane-the-ultimate-guide-to-effortless-android-and-ios-deployments-with-github-e0878c3f9529)
+[][Compose Interoperability in Espresso Tests](https://joebirch.co/android/compose-interoperability-in-espresso-tests/)
 
 
 # Known Issues
