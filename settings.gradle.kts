@@ -1,4 +1,4 @@
-rootProject.name = "NetWorthKMP"
+rootProject.name = "NetWorth"
 
 include(":androidApp")
 include(":shared")

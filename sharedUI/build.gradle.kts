@@ -46,6 +46,7 @@ kotlin {
             }
         }
 
+        @Suppress("UnusedPrivateMember")
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
