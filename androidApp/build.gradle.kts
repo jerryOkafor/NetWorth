@@ -17,7 +17,6 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.activity.ktx)
                 implementation(project(":shared"))
-                implementation(project(":sharedUI"))
             }
         }
     }

@@ -1,8 +1,4 @@
-@file:OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class,
-    ExperimentalResourceApi::class,
-)
+@file:OptIn(ExperimentalResourceApi::class)
 
 @file:Suppress("TooManyFunctions", "MultiLineIfElse", "MagicNumber")
 

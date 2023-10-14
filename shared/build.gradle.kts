@@ -14,7 +14,10 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            isStatic = true
+            isStatic = false
+
+            freeCompilerArgs += "-Xadd-light-debug=enable"
+            export(projects.core.ui)
         }
     }
 
@@ -22,6 +25,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // put your multiplatform dependencies here
+                api(projects.core.ui)
             }
         }
 

@@ -2,7 +2,9 @@ rootProject.name = "NetWorth"
 
 include(":androidApp")
 include(":shared")
-include(":sharedUI")
+include(":core:ui")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     includeBuild("build-logic")

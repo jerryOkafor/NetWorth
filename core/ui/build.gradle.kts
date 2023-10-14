@@ -25,7 +25,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "sharedUI"
+            baseName = "ui"
             isStatic = true
         }
     }
@@ -92,7 +92,7 @@ kotlin {
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.jerryokafor.networth.common.ui"
+    namespace = "com.jerryokafor.networth.core.ui"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
